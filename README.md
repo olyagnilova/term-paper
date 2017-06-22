@@ -5,5 +5,5 @@
 2. [IPython Notebook](https://github.com/olyagnilova/term-paper/blob/master/notebook.ipynb)
 
 3. Постеры:
-* [на русском](https://github.com/olyagnilova/term-paper/blob/master/poster_rus.pdf)
-* [на английском](https://github.com/olyagnilova/term-paper/blob/master/poster_eng.pdf)
+    * [на русском](https://github.com/olyagnilova/term-paper/blob/master/poster_rus.pdf)
+    * [на английском](https://github.com/olyagnilova/term-paper/blob/master/poster_eng.pdf)
