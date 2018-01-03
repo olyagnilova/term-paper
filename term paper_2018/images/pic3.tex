@@ -1,0 +1,45 @@
+\documentclass{article}
+%%%<
+\usepackage{verbatim}
+%%%>
+
+\usepackage{tikz}   %TikZ is required for this to work.  Make sure this exists before the next line
+
+\usepackage{tikz-3dplot} %requires 3dplot.sty to be in same directory, or in your LaTeX installation
+\usepackage{tkz-euclide}
+\usetkzobj{all}
+\usepackage[active,tightpage]{preview}  %generates a tightly fitting border around the work
+\PreviewEnvironment{tikzpicture}
+\setlength\PreviewBorder{2mm}
+
+\begin{document}
+\tdplotsetmaincoords{100}{110}
+\begin{tikzpicture}[scale=5,tdplot_main_coords]
+
+\coordinate (O) at (0,0,0);
+\coordinate (un) at (0.75,0.75,0);
+\coordinate (bx) at (-1.75,0.5,0);
+\coordinate (unl) at (1.5,1.5,0);
+
+\tdplotsetcoord{Y}{1.75}{30}{90}
+
+\draw[->] (O) -- (bx) node[anchor=south west]{$x$};
+\draw[->] (O) -- (Y) node[anchor=south west]{$y$};
+\draw[->] (O) -- (un) node[anchor=south east]{$\bar{y}\cdot\mathbf{1}$};
+\draw[dashed,->] (O) -- (unl) node[anchor=south west]{$\mathbf{1}$};
+
+\draw[->] (O) -- (Yxy) node[anchor=south west]{$\hat{y}$};
+\draw[dashed, color=blue] (Y) -- (Yxy) node[midway,color=black,anchor=west]{\tiny$\sqrt{RSS}$};
+\draw[dashed, color=blue] (Y) -- (un) node[midway,color=black,anchor=east]{\tiny$\sqrt{TSS}$};
+\draw[dashed, color=blue] (un) -- (Yxy) node[midway,color=black,anchor=north east]{\tiny$\sqrt{ESS}$};
+
+\tkzMarkRightAngle[size=0.03](Y,Yxy,un);
+
+\tdplotsetthetaplanecoords{110}
+\tdplotdrawarc[tdplot_rotated_coords]{(un)}{0.03}{12}{110}{anchor=south west}{\footnotesize$\varphi$}
+
+\end{tikzpicture}
+
+
+
+\end{document}
