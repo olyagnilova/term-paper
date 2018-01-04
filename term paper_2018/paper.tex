@@ -73,9 +73,12 @@
 
 
 \DeclareMathOperator{\Var}{Var}
+\DeclareMathOperator{\sVar}{sVar}
 \DeclareMathOperator{\card}{card}
 \DeclareMathOperator{\Cov}{Cov}
 \DeclareMathOperator{\Corr}{Corr}
+\DeclareMathOperator{\sCov}{sCov}
+\DeclareMathOperator{\sCorr}{sCorr}
 \DeclareMathOperator{\E}{E}
 \renewcommand{\P}{\mathbb{P}}
 \newcommand{\I}{\mathbb{I}} % индикатор события
@@ -130,7 +133,7 @@ and the angle between two random vectors
 \[
 \cos(X,Y) = \frac{\Cov(X,Y)}{\sqrt{\Var(X)\Var(Y)}} = \Corr(X,Y)
 \]
-Note that from the definition of the angle it follows that correlation is limited within an interval $[-1,1]$.
+Note that from the definition of the angle it follows that correlation can range from $-1$ to $1$.
 
 \begin{figure}[ht!]
 \begin{center}
@@ -142,7 +145,87 @@ Note that from the definition of the angle it follows that correlation is limite
 
 Another important geometrical tool is projection. Recall that for any two vectors the scalar product $\langle \vec{a}, \vec{b} \rangle$ can be interpreted as the length of projected $\vec{b}$ multuplied by the length of $\vec{a}$.
 The projection itself is $cos(\vec{a}, \vec{b}) \vec{b}$.
-Same holds for random vectors. The projection of a random vector $Y$ onto $\{cX| c \in \mathbb{R}\}$ is $\Corr(X,Y) \cdot Y$.
+Same holds for random vectors. The projection of a random vector $Y$ onto $\{cX| c \in \mathbb{R}\}$ is $\hat Y = \Corr(X,Y) \cdot Y$.
+
+\begin{figure}[ht!]
+\begin{center}
+\includegraphics{images/corr_proj.pdf}
+\label{fig:corr_proj}
+\caption{Random vector $Y$ projected onto random vector $X$.}
+\end{center}
+\end{figure}
+
+Looking at Figure~\ref{fig:corr_proj}, we can interpret the square of correlation coefficient.
+Using the fact that $cos^2 \varphi$ is the squared ratio of the leg adjacent to $\varphi$ to hypotenuse, we can write
+\[
+\Corr^2(X,Y) = \frac{\Var(\hat Y)}{\Var(Y)}
+\]
+as the variance of a random vecor is associated with the square of its length.
+Thus, the correlation coefficient squared shows the fraction of variance in $Y$ which can be explained
+with the most similar random variable proportional to $X$.
+
+\subsection{Sample correlation coefficient in simple linear regression}
+
+\marginnote{
+Assuming the underlying relationship between $x$ and $y$ to be
+\[
+y_i = \beta_1 + \beta_2 x_i + \varepsilon_i \quad i=1,\ldots,n
+\]
+where $\varepsilon_i$ is an error term the following holds
+\begin{align*}
+\sCorr(y, \hat y) &= \frac{\sCov(y)\sCov(\hat y)}{\sqrt{\sVar(y)\sVar(\hat y)}} \\
+&= \frac{\sCov(y)\sCov(\hat \beta_1 + \hat \beta_2 x)}{\sqrt{\sVar(y)\sVar(\hat \beta_1 + \hat \beta_2 x)}} \\
+&= \frac{\sCov(y)\sCov(\hat \beta_2 x)}{\sqrt{\sVar(y)\sVar(\hat \beta_2 x)}} \\
+&= \frac{\hat \beta_2 \sCov(y)\sCov(x)}{|\hat \beta_2| \sqrt{\sVar(y)\sVar(x)}} \\
+&= sign(\hat \beta_2) \frac{\sCov(y)\sCov(x)}{\sqrt{\sVar(y)\sVar(x)}}
+\end{align*}
+}
+
+\begin{theorem}
+A linear regression model with one explanatory variable and constant term has the property
+\[
+\sCorr(y, \hat y) = sign(\hat \beta_2) \sCorr(y, x)
+\]
+\end{theorem}
+
+\begin{proof}
+Firstly, we consider the case when $\hat \beta_2 > 0$ so the main picuture is of the form depicted in Figure~\ref{fig:corr_pos_base}.
+It has been shown earlier that the correlation coefficient squared represents the angle betweem two random vectors.
+
+\begin{figure}[ht!]
+\begin{center}
+\includegraphics{images/corr_eq_positive.pdf}
+\label{fig:corr_pos_base}
+\caption{Vectors $x$, $y$ and $\mathbf{1}$.}
+\end{center}
+\end{figure}
+
+However, it seems to be difficult to compare the angles in the three dimensional space.
+That is why we start with projecting both $x$ and $y$ onto the space perpendicular to the vector of all ones $\mathbf{1}$ as shown in Figure~\ref{fig:corr_pos_xyc}.
+We denote this space as $Lin^{\perp}(\mathbf{1})$. The resulting vectors are $x - \bar x \cdot \mathbf{1}$  and $y - \bar y \cdot \mathbf{1}$ respectively
+since projection of any vector $\vec{a}$ on the line given by a vector of all ones yields the vector of averages $\vec{\bar a}$.
+
+In order to get the angle between $y$ and $\hat y$ we should start with regressing $y$ on $Lin(x, \mathbf{1})$.
+Then the only thing thing left is to project $\hat y$ onto $Lin^{\perp}\mathbf{1}$ since the $y$ vector has already been projected.
+The result of this step is shown in Figure~\ref{fig:corr_pos_yhatc}.
+
+\begin{figure}[ht!]
+\begin{center}
+\subfigure[]{
+\includegraphics[width=0.4\linewidth]{images/corr_eq_positive_xy_centered.pdf}
+\label{fig:corr_pos_xyc}}
+\hspace{4ex}
+\subfigure[]{
+\includegraphics[width=0.4\linewidth]{images/corr_eq_positive_yhat.pdf}
+\label{fig:corr_pos_yhatc}}
+\caption{\subref{fig:corr_pos_xyc}: `Centred' $x$ and $y$, i.e., projected onto $Lin^{\perp}(\mathbf{1})$; \subref{fig:corr_pos_yhatc}: `Centred' $\hat y$, i.e., projected onto $Lin^{\perp}(\mathbf{1})$.}
+\end{center}
+\end{figure}
+
+todo: whole picture, $\beta_2<0$
+
+\end{proof}
+
 
 
 \subsection{Regression line and point of averages}
@@ -193,12 +276,10 @@ By the theorem of three perpendiculars, $\bar y = \bar \hat y$ which is shown in
 \begin{center}
 \subfigure[]{
 \includegraphics[width=0.4\linewidth]{images/averages_1.pdf}
-%\caption{Regression of $y$ on $Lin(x,z)$} %% подпись к рисунку
 \label{fig:averages_lin} }
 \hspace{4ex}
 \subfigure[]{
 \includegraphics[width=0.4\linewidth]{images/averages_2.pdf}
-%\caption{$Lin(x, z)$}
 \label{fig:averages_bars}}
 \caption{\subref{fig:averages_lin}: Regression of $y$ on $Lin(\mathbb{1},x)$; \subref{fig:averages_bars}: Regression of $y$ and $\hat y$ on $\mathbb{1}$.}
 \end{center}
