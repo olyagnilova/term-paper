@@ -1,0 +1,68 @@
+\documentclass{article}
+%%%<
+\usepackage{verbatim}
+%%%>
+
+\usepackage{tikz}   %TikZ is required for this to work.  Make sure this exists before the next line
+
+\usepackage{tikz-3dplot} %requires 3dplot.sty to be in same directory, or in your LaTeX installation
+\usepackage{tkz-euclide}
+\usetkzobj{all}
+\usepackage[active,tightpage]{preview}  %generates a tightly fitting border around the work
+\PreviewEnvironment{tikzpicture}
+\setlength\PreviewBorder{2mm}
+
+\begin{document}
+
+%Angle Definitions
+%-----------------
+
+%start tikz picture, and use the tdplot_main_coords style to implement the display
+%coordinate transformation provided by 3dplot
+\tdplotsetmaincoords{40}{130}
+
+
+\begin{tikzpicture}[scale=5,tdplot_main_coords]
+
+\coordinate (O) at (0,0,0);
+\coordinate (xc) at (1,0);
+\coordinate (yc) at (0,2);
+\coordinate (un) at (0,0,4);
+
+
+\tdplotsetcoord{S}{2}{30}{0}  % икс
+\tdplotsetcoord{P}{4}{30}{90} % игрек
+\tdplotsetcoord{Z}{3.4641}{0}{0} % 3.4641 = \sqrt{4^2 - 2^2}
+
+%\draw[color=white, fill=gray!10] (xc) to[out=90,in=90] (S)  to[out=90,in=180]  (un) -- (O) -- cycle;
+%\draw[color=white, fill=blue!10] (yc) to[out=90,in=90] (P) to[out=90,in=0] (un) -- (O) -- cycle;
+
+\draw[color=white, fill=gray!5] (S)  to[out=90,in=180]  (un) -- (O) -- cycle;
+\draw[color=white, fill=blue!5] (P) to[out=90,in=0] (un) -- (O) -- cycle;
+
+%\draw[color=white, fill=gray!10, pattern=dots] (S)  to[out=90,in=180]  (un) -- (O) -- cycle;
+%\draw[color=white, fill=blue!10, pattern=north east lines] (P) to[out=90,in=0] (un) -- (O) -- cycle;
+
+
+\draw[thick,->] (O) -- (xc) node[anchor=north east]{$x - \bar{x} \cdot \mathbf{1}$};
+\draw[thick,->] (O) -- (yc) node[anchor=north west]{$y - \bar{y} \cdot \mathbf{1}$};
+\draw[thick,->] (O) -- (un) node[anchor=south]{$\mathbf{1}$};
+
+\tdplotdrawarc{(O)}{0.1}{0}{90}{anchor=north}{$\phi$}
+
+
+\draw[-stealth,thick] (O) -- (S) node[anchor=north east]{$x$};
+\draw[-stealth,thick] (O) -- (P) node[anchor=north west]{$y$};
+
+\draw[dashed] (S) -- (Sx);
+\draw[dashed] (P) -- (Py);
+
+\tkzMarkRightAngle[size=0.05](P,yc,O);
+\tkzMarkRightAngle[size=0.05](S,xc,O);
+
+
+
+\end{tikzpicture}
+
+
+\end{document}
