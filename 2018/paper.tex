@@ -135,7 +135,7 @@ and the angle between two random vectors
 \]
 Note that from the definition of the angle it follows that correlation can range from $-1$ to $1$.
 
-\begin{figure}[ht!]
+\begin{figure}[h!]
 \begin{center}
 \includegraphics{images/corr_def.pdf}
 \caption{Random vector $X$ of length $\sigma_X$ and random vector $Y$ of length $\sigma_Y$, $\cos \varphi$ is the angle between $X$ and $Y$.}
@@ -147,7 +147,7 @@ Another important geometrical tool is projection. Recall that for any two vector
 The projection itself is $cos(\vec{a}, \vec{b}) \vec{b}$.
 Same holds for random vectors. The projection of a random vector $Y$ onto $\{cX| c \in \mathbb{R}\}$ is $\hat Y = \Corr(X,Y) \cdot Y$.
 
-\begin{figure}[ht!]
+\begin{figure}[h!]
 \begin{center}
 \includegraphics{images/corr_proj.pdf}
 \caption{Random vector $Y$ projected onto random vector $X$.}
@@ -182,7 +182,11 @@ where $\varepsilon_i$ is an error term the following holds
 }
 
 \begin{theorem}
-A linear regression model with one explanatory variable and constant term has the property
+A linear regression model with one explanatory variable and constant term
+\[
+y = \beta_1 + \beta_2 x + \varepsilon
+\]
+has the property
 \[
 \sCorr(y, \hat y) = sign(\hat \beta_2) \sCorr(y, x)
 \]
@@ -210,7 +214,7 @@ Note that the projected $\hat y$ falls onto tha span of vector $x - \bar x \cdot
 $a x$ is projected in the same way as $x$ and $b \mathbf{1}$ yields zero when projected onto the orthogonal space.
 The result of this step is shown in Figure~\ref{fig:corr_pos_yhatc}.
 
-\begin{figure}[ht!]
+\begin{figure}[h!]
 \begin{center}
 \subfigure[]{
 \includegraphics[width=0.4\linewidth]{images/corr_eq_positive_xy_centered.pdf}
@@ -231,7 +235,7 @@ The only difference is that now $\hat y$ is projected onto the span of  $x - \ba
 Looking at Figure~\ref{fig:corr_negative} we deduce that the angle betwween $y$ and $\hat y$ is compelement to the angle between $x$ and $y$.
 Using trigonometric properties, we simplify $\cos(180^{\circ} - \varphi) = -\cos\varphi$ which in turn implies $\sCorr(x,y) = -\sCorr(y,\hat y)$.
 
-\begin{figure}[ht!]
+\begin{figure}[h!]
 \begin{center}
 \includegraphics{images/corr_eq_negative.pdf}
 \label{fig:corr_negative}
@@ -241,6 +245,122 @@ Using trigonometric properties, we simplify $\cos(180^{\circ} - \varphi) = -\cos
 \end{proof}
 
 
+\subsection{RSS + ESS = TSS}
+
+\marginnote{
+Consider a regresion model with $n$ observations and $k$ explanatory variables including a constant unit vector
+\[
+y = X \beta + \varepsilon
+\]
+The OLS estimator for the vector of coefficients $\beta$ is
+\[
+\hat \beta = (X^T X)^{-1} X^T y
+\]
+and the residual vector is
+\begin{align*}
+\hat e &= y - \hat y \\
+&= y - X \hat \beta \\
+&= y - X (X^T X)^{-1} X^T y
+\end{align*}
+Then we define residual sum of squares (RSS), explained sum of squares (ESS) and total sum of squares (TSS) as follows:
+\begin{align*}
+RSS &= \lVert y - \hat y \rVert^2_2 \\
+ESS &= \lVert \hat y - \bar y \rVert^2_2 \\
+TSS &= \lVert y - \bar y \rVert \\
+\end{align*}
+Disclosing parentheses and using the fact that $\hat{y}^T y = \hat{y}^T \hat{y}$
+\begin{align*}
+\hat{y}^T y &= \beta^T X^T y \\
+&=  y^T X (X^T X)^{-1} X^T y \\
+\hat{y}^T \hat{y} &= \beta^T X^T X \beta \\
+&= y^T X (X^T X)^{-1} X^T X (X^T X)^{-1} X^T y \\
+&= y^T X (X^T X)^{-1} X^T y
+\end{align*}
+we obtain
+\begin{align*}
+RSS &= y^T y -\hat{y}^T \hat{y} \\
+ESS &= \hat{y}^T \hat{y} - \hat{y}^T \bar{y} + \bar{y}^T \bar{y} \\
+TSS &= y^T y - 2 y^T \bar y +  \bar{y}^T \bar{y}
+\end{align*}
+When putting everything together all the terms cancel out which proves
+\[
+ESS + RSS = TSS
+\]
+}
+
+\begin{theorem}
+A linear regression model with $n$ observations and $k$ explanatory variables including a constant unit vector
+\[
+y = X \beta + \varepsilon
+\]
+has the following property
+\[
+RSS + ESS = TSS
+\]
+where $RSS = \lVert y - \hat y \rVert^2_2$, $ESS = \lVert \hat y - \bar y \rVert^2_2$, $TSS = \lVert y - \bar y \rVert$.
+\end{theorem}
+
+\begin{proof}
+The proof will be presented for the case of two regressor $x$ and $\mathbf{1}$ in order for the picture to be clear.
+However, the same logic applies for the case of $k$ regressors.
+
+We start with depicting the vectors $y \in \mathbb{R}^{n-2}$ and $x, \mathbf{1} \in \mathbb{R}^2$.
+Then we project $y$ onto $Lin(x, \mathbf{1})$ and obtain $\hat y$ which is shown in Figure~\ref{fig:tss_base}.
+
+From this picture we can immediately derive $\sqrt{RSS}$ as by definition this is the squared difference between $y$ and $\hat y$.
+
+\begin{figure}[h!]
+\begin{center}
+\subfigure[]{
+\includegraphics[width=0.4\linewidth]{images/tss_sum_base.pdf}
+\label{fig:tss_base} }
+\hspace{4ex}
+\subfigure[]{
+\includegraphics[width=0.4\linewidth]{images/tss_sum_rss.pdf}
+\label{fig:tss_rss}}
+\caption{\subref{fig:tss_base}: Vectors $y \in \mathbb{R}^{n-2}$ and $\hat y \in Lin(x, \mathbf{1})$; \subref{fig:tss_rss}: Residual sum of squares.}
+\end{center}
+\end{figure}
+
+So as to visualize $ESS$ and $TSS$ we first need to visualize vector of averages $\bar y$.
+Geometrically this means projecting a vector onto a line spanned by vector $\mathbf{1}$.
+It can be shown that the matrix corresponding to projecting onto the line spanned by a vector of all ones has the following form
+\[
+\frac{\mathbf{1}^T \mathbf{1}}{\mathbf{1} \mathbf{1}^T} = \frac{\begin{pmatrix} 1 & \ldots & 1 \end{pmatrix} \begin{pmatrix} 1 \\ \ldots \\ 1 \end{pmatrix}}{\sum_{i=1}^n 1} = \begin{pmatrix} \frac{1}{n} & \ldots & \frac{1}{n} \\ \vdots & \ddots & \vdots \\ \frac{1}{n} & \ldots & \frac{1}{n} \end{pmatrix}
+\]
+
+Now we both project $y$ and $\hat y$ onto $\mathbf{1}$ and following the definition obtain $\sqrt{TSS}$ as the difference vector $y - \bar y$ and $\sqrt{ESS}$ as the vector $\hat y - \bar y$.
+
+\begin{figure}[h!]
+\begin{center}
+\subfigure[]{
+\includegraphics[width=0.4\linewidth]{images/tss_sum_tss.pdf}
+\label{fig:tss_tss}}
+\hspace{4ex}
+\subfigure[]{
+\includegraphics[width=0.4\linewidth]{images/tss_sum_ess.pdf}
+\label{fig:tss_ess}}
+\caption{\subref{fig:tss_tss}: Total sum of squares; \subref{fig:tss_ess}: Explained sum of squares.}
+\end{center}
+\end{figure}
+
+The final step is to put everything together.
+Note that since $y - \hat y$ is perpendicular to $lin(x, \mathbf{1})$ it is also perpendicular to $\hat y - \bar y$ and $\mathbf{1}$ as these vectoros are in $lin(x, \mathbf{1})$.
+Then, applying the theorem of three perpendiculars we conclude that vecotr foot of vector $y - \bar y$ is the same point as the foot of the vector $\hat y - \bar y$.
+Thus, we obtain a right angle triangle and can apply the Pythagorean theorem for the catheti $\sqrt{RSS}$ and $\sqrt{ESS}$ and the hypothenuse $\sqrt{TSS}$:
+\[
+\sqrt{RSS} + \sqrt{ESS} = \sqrt{TSS}
+\]
+
+\begin{figure}[h!]
+\center{\includegraphics{images/tss_sum_final.pdf}}
+\caption{$\sqrt{RSS} + \sqrt{ESS} = \sqrt{TSS}$}
+\label{fig:tss_final}
+\end{figure}
+
+\end{proof}
+
+\subsection{Determination coefficient}
 
 \subsection{Regression line and point of averages}
 
@@ -298,6 +418,7 @@ By the theorem of three perpendiculars, $\bar y = \bar \hat y$ which is shown in
 \caption{\subref{fig:averages_lin}: Regression of $y$ on $Lin(\mathbb{1},x)$; \subref{fig:averages_bars}: Regression of $y$ and $\hat y$ on $\mathbb{1}$.}
 \end{center}
 \end{figure}
+
 
 
 \end{proof}
