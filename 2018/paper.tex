@@ -105,12 +105,14 @@ sorting = none]{biblatex}
 
 \section{Regression}
 
-\subsection{Correlation}
+\subsection{Sample correlation}
 
-\marginnote{The most widespread definition of correlation is
-\[
-\Corr(X,Y)  = \frac{\Cov(X, Y)}{\sqrt{\Var(X)\Var(Y)}}
-\]}
+\marginnote{
+\begin{align*}
+\sCorr(x,y) &= \frac{\sCov(x,y)}{\sqrt{\sVar(x)\sVar(y)}} \\
+&= \frac{\frac{1}{n-1}\sum_{i=1}^n (x_i - \bar x)(y_i - \bar y)}{\sqrt{\frac{1}{n-1} \sum_{i=1}^n (y_i - \bar y)\frac{1}{n-1} \sum_{i=1}^n (\hat y_i - \bar{\hat y})}}
+\end{align*}
+}
 
 The most crucial part in defining correlation geometrically is definig the dot product as it enables to compute the length of a vecotr:
 \[
@@ -120,49 +122,132 @@ and the angle between any two vectors:
 \[
 \cos(\vec{a}, \vec{b}) = \frac{\langle \vec{a},  \vec{a}\rangle}{|\vec{a}| |\vec{b}|}
 \]
-Now we define scalar product of two random vectors as covariation between them:
+Now we define scalar product of two vectors
+$x =
+\begin{pmatrix}
+x_1 \\
+\vdots \\
+x_n
+\end{pmatrix}$
+and
+$y =
+\begin{pmatrix}
+y_1 \\
+\vdots \\
+y_n
+\end{pmatrix}$
+as a sample covariation between them:
 \[
-\langle X, Y \rangle = \Cov(X, Y)
+\langle x, y \rangle = \sCov(x, y)
 \]
-The main characteristics of a random vector are its length and direction.
+The main characteristics of a vector are its length and direction.
 So, we introduce the length
 \[
-\sqrt{\Cov{X,X}} = \sqrt{\Var(X)} = \sigma_X
+\sqrt{\sCov(x,x)} = \sqrt{\sVar(x)} = \sigma_x
 \]
 and the angle between two random vectors
 \[
-\cos(X,Y) = \frac{\Cov(X,Y)}{\sqrt{\Var(X)\Var(Y)}} = \Corr(X,Y)
+\cos(x,y) = \frac{\sCov(x,y)}{\sqrt{\sVar(x)\sVar(y)}} = \sCorr(x,y)
 \]
-Note that from the definition of the angle it follows that correlation can range from $-1$ to $1$.
+Note that from the definition of the angle it follows that the sample correlation can range from $-1$ to $1$.
 
 \begin{figure}[h!]
 \begin{center}
 \includegraphics{images/corr_def.pdf}
-\caption{Random vector $X$ of length $\sigma_X$ and random vector $Y$ of length $\sigma_Y$, $\cos \varphi$ is the angle between $X$ and $Y$.}
+\caption{Vector $x$ of length $\sigma_x$ and random vector $y$ of length $\sigma_y$, $\cos \varphi$ is the angle between $x$ and $y$.}
 \label{fig:corr_def}
 \end{center}
 \end{figure}
 
 Another important geometrical tool is projection. Recall that for any two vectors the scalar product $\langle \vec{a}, \vec{b} \rangle$ can be interpreted as the length of projected $\vec{b}$ multuplied by the length of $\vec{a}$.
 The projection itself is $cos(\vec{a}, \vec{b}) \vec{b}$.
-Same holds for random vectors. The projection of a random vector $Y$ onto $\{cX| c \in \mathbb{R}\}$ is $\hat Y = \Corr(X,Y) \cdot Y$.
+Same holds for the vectors sampled from some distribution.
+The projection of such a vector $y$ onto $\{cx| c \in \mathbb{R}\}$ is $\hat y = \sCorr(x,y) \cdot y$.
 
 \begin{figure}[h!]
 \begin{center}
 \includegraphics{images/corr_proj.pdf}
-\caption{Random vector $Y$ projected onto random vector $X$.}
+\caption{Vector $y$ projected onto vector $x$.}
 \label{fig:corr_proj}
 \end{center}
 \end{figure}
 
-Looking at Figure~\ref{fig:corr_proj}, we can interpret the square of correlation coefficient.
-Using the fact that $cos^2 \varphi$ is the squared ratio of the leg adjacent to $\varphi$ to hypotenuse, we can write
+Looking at Figure~\ref{fig:corr_proj}, we can interpret the square of sample correlation coefficient.
+Using the fact that $cos^2 \varphi$ is the squared ratio of the leg adjacent to $\varphi$ to hypotenuse, we can conclude that
 \[
-\Corr^2(X,Y) = \frac{\Var(\hat Y)}{\Var(Y)}
+\sCorr^2(x,y) = \frac{\sVar(\hat y)}{\sVar(y)}
 \]
-as the variance of a random vecor is associated with the square of its length.
-Thus, the correlation coefficient squared shows the fraction of variance in $Y$ which can be explained
-with the most similar random variable proportional to $X$.
+as the variance of a vector is associated with the square of its length.
+Thus, the sample correlation coefficient squared shows the fraction of variance in $y$ which can be explained
+with the most similar vector proportional to $x$.
+
+
+\subsection{Sample correlation when a constatnt vector added}
+
+\marginnote{
+\begin{align*}
+\sCorr(x + \alpha \mathbf{1}, y) &= \frac{\sCov(x + \alpha \mathbf{1}, y)}{\sVar(x + \alpha \mathbf{1}) \sVar(y)} \\
+&= \frac{\sCov(x,y)\sCov(\alpha \mathbf{1},y)}{\sVar(x)\sVar(y)} \\
+&= \frac{\sCov(x,y)}{\sVar(x)\sVar(y)} \\
+&= \sCorr(x,y)
+\end{align*}
+}
+
+\begin{theorem}
+Adding a vector of constants does not affect the sample correlation coefficient:
+\[
+\sCorr(x + \alpha \mathbf{1}, y) = \sCorr(x,y)
+\]
+where $\alpha \in \mathbb{R}$.
+\end{theorem}
+
+\begin{proof}
+Firstly, we project vectors $x$ and $y$ onto $Lin^{\perp}(\mathbf{1})$ in order to get $x^c = x - \bar x$ and $y^c = y - \bar y$
+(`c' stands for `centred'). It can be shown that the matrix corresponding to projecting onto the line spanned by a vector of all ones has the following form
+\[
+\frac{\mathbf{1}^T \mathbf{1}}{\mathbf{1} \mathbf{1}^T} = \frac{\begin{pmatrix} 1 & \ldots & 1 \end{pmatrix} \begin{pmatrix} 1 \\ \ldots \\ 1 \end{pmatrix}}{\sum_{i=1}^n 1} = \begin{pmatrix} \frac{1}{n} & \ldots & \frac{1}{n} \\ \vdots & \ddots & \vdots \\ \frac{1}{n} & \ldots & \frac{1}{n} \end{pmatrix}
+\]
+Thus, projecting onto an orthogonal subspace is equivalent to substracting the projected vector, i.e., the vector of averages, from the original one.
+
+Also note that the angle $\varphi$ between original and centred vectors remains the same.
+The results of this step is shown in Figure~\ref{fig:corr_xyc}.
+
+\begin{figure}
+  \centering
+  \includegraphics{images/corr_const_cent.pdf}
+  \caption{Centred vectors $x^c$ and $y^c$}
+  \label{fig:corr_xyc}
+\end{figure}
+
+Then we need to derive a new vector $\tilde x$ with constants added to each component.
+Geometrically adding a vector of costants means adding a vector of all ones scaled by $\alpha \in \mathbb{R}$, i.e., $\alpha \mathbf{1}$.
+Then the new vector $\tilde x$ can be broken up into a sum of $\alpha \mathbf{1}$ and $\beta x$, $\alpha, \beta \in \mathbb{R}$, which can be seen in Figure~\ref{fig:corr_tildex}.
+After that we will project this new vector $\tilde x$ onto $Lin^{\perp}(\mathbf{1})$.
+By the properties of projection it is of no difference whether to project the whole vector $\tilde x$ or project its parts $\alpha \mathbf{1}$ and $\beta x$ — the result is the same.
+So, while $\beta x$ is projected onto a span of $x^c$, the projection of $\alpha \mathbf{1}$ onto the orthohgonal space $Lin^{\perp}(\mathbf{1})$ yields zero as demonstrated in Figure~\ref{fig:corr_tildex}.
+Moreover, it follows that the angle between $\tilde x$ and $y$ is still $\varphi$.
+
+\begin{figure}
+  \centering
+  \includegraphics{images/corr_const_br_up.pdf}
+  \caption{Decomposition and projection of $\tilde x$}
+  \label{fig:corr_tildex}
+\end{figure}
+
+Finally, putting everything together we finish the proof:
+\[
+\sCorr(x + \alpha \mathbf{1}, y) = \sCorr(x,y)
+\]
+
+\begin{figure}
+  \centering
+  \includegraphics{images/corr_const_final.pdf}
+  \caption{$\sCorr(x + \alpha \mathbf{1}, y) = \sCorr(x,y)$ as the corresponding angles are equal.}
+  \label{fig:corr_final}
+\end{figure}
+
+
+\end{proof}
 
 \subsection{Sample correlation coefficient in simple linear regression}
 
@@ -231,7 +316,7 @@ Since the projection of $\hat y$ lies exactly on the span of vector $x - \bar x 
 
 Now consider the case when $\hat \beta_2 < 0$.
 Note that the sign of $\beta_1$ does not influence the correlation coefficient sign.
-The only difference is that now $\hat y$ is projected onto the span of  $x - \bar x \cdot \mathbf{1}$ not on this vector itself while the projections of $x$ and $y$ remain the same.
+The only difference is that now $\hat y$ is projected onto the span of  $x - \bar x \cdot \mathbf{1}$ and not on this vector itself while the projections of $x$ and $y$ remain the same.
 Looking at Figure~\ref{fig:corr_negative} we deduce that the angle betwween $y$ and $\hat y$ is compelement to the angle between $x$ and $y$.
 Using trigonometric properties, we simplify $\cos(180^{\circ} - \varphi) = -\cos\varphi$ which in turn implies $\sCorr(x,y) = -\sCorr(y,\hat y)$.
 
@@ -297,7 +382,7 @@ has the following property
 \[
 RSS + ESS = TSS
 \]
-where $RSS = \lVert y - \hat y \rVert^2_2$, $ESS = \lVert \hat y - \bar y \rVert^2_2$, $TSS = \lVert y - \bar y \rVert$.
+where $RSS = \lVert y - \hat y \rVert^2_2$, $ESS = \lVert \hat y - \bar y \rVert^2_2$, $TSS = \lVert y - \bar y \rVert^2_2$.
 \end{theorem}
 
 \begin{proof}
@@ -324,10 +409,6 @@ From this picture we can immediately derive $\sqrt{RSS}$ as by definition this i
 
 So as to visualize $ESS$ and $TSS$ we first need to visualize vector of averages $\bar y$.
 Geometrically this means projecting a vector onto a line spanned by vector $\mathbf{1}$.
-It can be shown that the matrix corresponding to projecting onto the line spanned by a vector of all ones has the following form
-\[
-\frac{\mathbf{1}^T \mathbf{1}}{\mathbf{1} \mathbf{1}^T} = \frac{\begin{pmatrix} 1 & \ldots & 1 \end{pmatrix} \begin{pmatrix} 1 \\ \ldots \\ 1 \end{pmatrix}}{\sum_{i=1}^n 1} = \begin{pmatrix} \frac{1}{n} & \ldots & \frac{1}{n} \\ \vdots & \ddots & \vdots \\ \frac{1}{n} & \ldots & \frac{1}{n} \end{pmatrix}
-\]
 
 Now we both project $y$ and $\hat y$ onto $\mathbf{1}$ and following the definition obtain $\sqrt{TSS}$ as the difference vector $y - \bar y$ and $\sqrt{ESS}$ as the vector $\hat y - \bar y$.
 
@@ -345,8 +426,8 @@ Now we both project $y$ and $\hat y$ onto $\mathbf{1}$ and following the definit
 \end{figure}
 
 The final step is to put everything together.
-Note that since $y - \hat y$ is perpendicular to $lin(x, \mathbf{1})$ it is also perpendicular to $\hat y - \bar y$ and $\mathbf{1}$ as these vectoros are in $lin(x, \mathbf{1})$.
-Then, applying the theorem of three perpendiculars we conclude that vecotr foot of vector $y - \bar y$ is the same point as the foot of the vector $\hat y - \bar y$.
+Note that since $y - \hat y$ is perpendicular to $Lin(x, \mathbf{1})$ it is also perpendicular to $\hat y - \bar y$ and $\mathbf{1}$ as these vectoros are in $Lin(x, \mathbf{1})$.
+Then, applying the theorem of three perpendiculars we conclude that the foot of vector $y - \bar y$ is the same point as the foot of the vector $\hat y - \bar y$.
 Thus, we obtain a right angle triangle and can apply the Pythagorean theorem for the catheti $\sqrt{RSS}$ and $\sqrt{ESS}$ and the hypothenuse $\sqrt{TSS}$:
 \[
 \sqrt{RSS} + \sqrt{ESS} = \sqrt{TSS}
@@ -354,7 +435,7 @@ Thus, we obtain a right angle triangle and can apply the Pythagorean theorem for
 
 \begin{figure}[h!]
 \center{\includegraphics{images/tss_sum_final.pdf}}
-\caption{$\sqrt{RSS} + \sqrt{ESS} = \sqrt{TSS}$}
+\caption{$(\sqrt{RSS})^2 + (\sqrt{ESS})^2 = (\sqrt{TSS})^2$}
 \label{fig:tss_final}
 \end{figure}
 
@@ -362,12 +443,67 @@ Thus, we obtain a right angle triangle and can apply the Pythagorean theorem for
 
 \subsection{Determination coefficient}
 
+\marginnote{
+\begin{align*}
+\sCorr^2(y,\hat y) &= \left(\frac{\sCov(y, \hat y)}{\sqrt{\sVar(y)\sVar(\hat y)}}\right)^2 \\
+&= \frac{\sCov(y, \hat y) \sCov(y, \hat y)}{\sVar(y)\sVar(\hat y)} \\
+&= \frac{\sCov(\hat y + e, \hat y) \sCov(\hat y + e, \hat y)}{\sVar(y)\sVar(\hat y)} \\
+&= \frac{(\sCov(\hat y, \hat y) + \sCov(e, \hat y))(\sCov(\hat y, \hat y) + \sCov(e, \hat y))}{\sVar(y)\sVar(\hat y)} \\
+&= \frac{\sVar(\hat y) \sVar(\hat y)}{\sVar(y)\sVar(\hat y)} \\
+&= \frac{\sVar(\hat y)}{\sVar(y)} \\
+&= \frac{ESS}{TSS} \\
+&= R^2
+\end{align*}
+}
+
+\begin{theorem}
+A linear regression model with $n$ observations and $k$ explanatory variables including a constant unit vector
+\[
+y = X \beta + \varepsilon
+\]
+has the following property
+\[
+R^2 = \sCorr^2(y, \hat y)
+\]
+\end{theorem}
+
+\begin{proof}
+Proving this theorem geometrically means showing that the determination coefficient can be interpreted as some squared angle
+which happens to be eqaul to the squared angle betwen $y$ and $\hat y$.
+
+Consider Figure~\ref{fig:tss_final} from the previous proof.
+It was shown there that the vectors $y - \bar y$, $y - \hat y$ and $\hat y - \bar y$ form a right triangle.
+Having defined the determination coefficient as
+\[
+R^2 = \frac{ESS}{TSS}
+\]
+we conclude that its geometric interpretaion is
+\[
+\sqrt{R^2} = \frac{\sqrt{ESS}}{\sqrt{TSS}} = \cos \varphi
+\]
+as shown in Figure~\ref{fig:r_sq_angle}.
+
+\begin{figure}
+  \center{\includegraphics{images/r_sq_ss.pdf}}
+  \caption{Determination coefficient as squared $\cos \varphi$}
+  \label{fig:r_sq_angle}
+\end{figure}
+
+Recall that the sample correlation coefficient two vectors was defined earlier as the angle between these two vectors.
+Thus, we conclude that $\sCorr(y, \hat y)$ is the angle between $y$ and $\hat y$ which is also eqaul to $\cos \varphi$.
+Finally, squaring both sides, we obtain
+\[
+R^2 = \sCorr^2(y, \hat y)
+\]
+\end{proof}
+
 \subsection{Regression line and point of averages}
 
 \marginnote{
 If the regression contains the intercept, the following equation holds:
 \begin{align*}
-\hat y  &= X \hat \beta = X (X^T X)^{-1} X^T y \\
+\hat y  &= X \hat \beta \\
+&= X (X^T X)^{-1} X^T y \\
 &= X (X^T X)^{-1} X^T X \beta + X (X^T X)^{-1} X^T \varepsilon
 \end{align*}
 Premultiplying both sides by $X^T$, we obtain:
