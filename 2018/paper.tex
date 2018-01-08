@@ -74,17 +74,22 @@
 
 \DeclareMathOperator{\Var}{Var}
 \DeclareMathOperator{\sVar}{sVar}
+\DeclareMathOperator{\pVar}{pVar}
 \DeclareMathOperator{\card}{card}
 \DeclareMathOperator{\Cov}{Cov}
 \DeclareMathOperator{\Corr}{Corr}
 \DeclareMathOperator{\sCov}{sCov}
+\DeclareMathOperator{\pCov}{pCov}
 \DeclareMathOperator{\sCorr}{sCorr}
+\DeclareMathOperator{\pCorr}{pCorr}
 \DeclareMathOperator{\E}{E}
 \renewcommand{\P}{\mathbb{P}}
 \newcommand{\I}{\mathbb{I}} % индикатор события
 \newtheorem{theorem}{Theorem}
 \newtheorem{corollary}{Corollary}[theorem]
 \newtheorem{lemma}[theorem]{Lemma}
+\theoremstyle{definition}
+\newtheorem{definition}{Definition}
 
 \usepackage[bibencoding = auto, backend = biber,
 sorting = none]{biblatex}
@@ -153,7 +158,7 @@ Note that from the definition of the angle it follows that the sample correlatio
 
 \begin{figure}[h!]
 \begin{center}
-\includegraphics{images/corr_def.pdf}
+\includegraphics[width=0.4\linewidth]{images/corr_def.pdf}
 \caption{Vector $x$ of length $\sigma_x$ and random vector $y$ of length $\sigma_y$, $\cos \varphi$ is the angle between $x$ and $y$.}
 \label{fig:corr_def}
 \end{center}
@@ -166,7 +171,7 @@ The projection of such a vector $y$ onto $\{cx| c \in \mathbb{R}\}$ is $\hat y =
 
 \begin{figure}[h!]
 \begin{center}
-\includegraphics{images/corr_proj.pdf}
+\includegraphics[width=0.4\linewidth]{images/corr_proj.pdf}
 \caption{Vector $y$ projected onto vector $x$.}
 \label{fig:corr_proj}
 \end{center}
@@ -205,26 +210,32 @@ where $\alpha \in \mathbb{R}$.
 Firstly, we project vectors $x$ and $y$ onto $Lin^{\perp}(\mathbf{1})$ in order to get $x^c = x - \bar x$ and $y^c = y - \bar y$
 (`c' stands for `centred'). It can be shown that the matrix corresponding to projecting onto the line spanned by a vector of all ones has the following form
 \[
-\frac{\mathbf{1}^T \mathbf{1}}{\mathbf{1} \mathbf{1}^T} = \frac{\begin{pmatrix} 1 & \ldots & 1 \end{pmatrix} \begin{pmatrix} 1 \\ \ldots \\ 1 \end{pmatrix}}{\sum_{i=1}^n 1} = \begin{pmatrix} \frac{1}{n} & \ldots & \frac{1}{n} \\ \vdots & \ddots & \vdots \\ \frac{1}{n} & \ldots & \frac{1}{n} \end{pmatrix}
+\frac{\mathbf{1}^T \mathbf{1}}{\mathbf{1} \mathbf{1}^T} = \frac{\begin{pmatrix} 1 & \ldots & 1 \end{pmatrix} \begin{pmatrix} 1 \\ \vdots \\ 1 \end{pmatrix}}{\sum_{i=1}^n 1} = \begin{pmatrix} \frac{1}{n} & \ldots & \frac{1}{n} \\ \vdots & \ddots & \vdots \\ \frac{1}{n} & \ldots & \frac{1}{n} \end{pmatrix}
 \]
 Thus, projecting onto an orthogonal subspace is equivalent to substracting the projected vector, i.e., the vector of averages, from the original one.
 
 Also note that the angle $\varphi$ between original and centred vectors remains the same.
 The results of this step is shown in Figure~\ref{fig:corr_xyc}.
 
-\begin{figure}
+\begin{figure}[h!]
   \centering
-  \includegraphics{images/corr_const_cent.pdf}
+  \includegraphics[width=0.45\linewidth]{images/corr_const_cent.pdf}
   \caption{Centred vectors $x^c$ and $y^c$}
   \label{fig:corr_xyc}
 \end{figure}
 
 Then we need to derive a new vector $\tilde x$ with constants added to each component.
-Geometrically adding a vector of costants means adding a vector of all ones scaled by $\alpha \in \mathbb{R}$, i.e., $\alpha \mathbf{1}$.
-Then the new vector $\tilde x$ can be broken up into a sum of $\alpha \mathbf{1}$ and $\beta x$, $\alpha, \beta \in \mathbb{R}$, which can be seen in Figure~\ref{fig:corr_tildex}.
+Geometrically adding a vector of costants means adding a vector of all ones
+scaled by $\alpha \in \mathbb{R}$, i.e., $\alpha \mathbf{1}$.
+Then the new vector $\tilde x$ can be broken up into a sum of $\alpha \mathbf{1}$ and
+$\beta x$, $\alpha, \beta \in \mathbb{R}$, which can be seen in Figure~\ref{fig:corr_tildex}.
 After that we will project this new vector $\tilde x$ onto $Lin^{\perp}(\mathbf{1})$.
-By the properties of projection it is of no difference whether to project the whole vector $\tilde x$ or project its parts $\alpha \mathbf{1}$ and $\beta x$ — the result is the same.
-So, while $\beta x$ is projected onto a span of $x^c$, the projection of $\alpha \mathbf{1}$ onto the orthohgonal space $Lin^{\perp}(\mathbf{1})$ yields zero as demonstrated in Figure~\ref{fig:corr_tildex}.
+By the properties of projection it is of no difference whether to project
+the whole vector $\tilde x$ or project its parts $\alpha \mathbf{1}$
+and $\beta x$ — the result is the same.
+So, while $\beta x$ is projected onto a span of $x^c$, the projection of $\alpha \mathbf{1}$
+onto the orthohgonal space $Lin^{\perp}(\mathbf{1})$ yields zero as demonstrated
+in Figure~\ref{fig:corr_tildex}.
 Moreover, it follows that the angle between $\tilde x$ and $y$ is still $\varphi$.
 
 \begin{figure}
@@ -283,7 +294,7 @@ It has been shown earlier that the correlation coefficient represents the angle 
 So in order to complete the proof we need to find the appropriate angles and compare them.
 
 \begin{figure}[h!]
-\center{\includegraphics{images/corr_eq_positive.pdf}}
+\center{\includegraphics[width=0.35\linewidth]{images/corr_eq_positive.pdf}}
 \caption{Vectors $x$, $y$ and $\mathbf{1}$.}
 \label{fig:corr_pos_base}
 \end{figure}
@@ -302,11 +313,11 @@ The result of this step is shown in Figure~\ref{fig:corr_pos_yhatc}.
 \begin{figure}[h!]
 \begin{center}
 \subfigure[]{
-\includegraphics[width=0.4\linewidth]{images/corr_eq_positive_xy_centered.pdf}
+\includegraphics[width=0.6\linewidth]{images/corr_eq_positive_xy_centered.pdf}
 \label{fig:corr_pos_xyc}}
-\hspace{4ex}
+%\hspace{4ex}
 \subfigure[]{
-\includegraphics[width=0.4\linewidth]{images/corr_eq_positive_yhat.pdf}
+\includegraphics[width=0.6\linewidth]{images/corr_eq_positive_yhat.pdf}
 \label{fig:corr_pos_yhatc}}
 \caption{\subref{fig:corr_pos_xyc}: `Centred' $x$ and $y$, i.e., projected onto $Lin^{\perp}(\mathbf{1})$; \subref{fig:corr_pos_yhatc}: `Centred' $\hat y$, i.e., projected onto $Lin^{\perp}(\mathbf{1})$.}
 \end{center}
@@ -532,7 +543,11 @@ And this finishes the proof:
 }
 
 \begin{theorem}
-The point of averages lies on the estimated regression line.
+In a linear regression model with one explanatory variable and constant term
+\[
+y = \beta_1 + \beta_2 x + \varepsilon
+\]
+the point of averages lies on the estimated regression line.
 \end{theorem}
 
 \begin{proof}
@@ -664,7 +679,8 @@ So at first, we fix this problem by translation and after taht obtain $\hat\beta
 \includegraphics[width=0.4\linewidth]{images/fwl_2_regression_translation.pdf}
 %\caption{$Lin(x, z)$}
 \label{fig:fwl_2_regression_trans}}
-\caption{\subref{fig:fwl_2_regression_first}: Regression of $y$ on $z$ and of $x$ on $z$; \subref{fig:fwl_2_regression_trans}: Translation of $\tilde{x}$.}
+\caption{\subref{fig:fwl_2_regression_first}: Regression of $y$ on $z$ and of $x$ on $z$;
+\subref{fig:fwl_2_regression_trans}: Translation of $\tilde{x}$.}
 \end{center}
 \end{figure}
 
@@ -681,13 +697,15 @@ Now, let us picture all the results in one figure and mark some main points.
 \includegraphics[width=0.4\linewidth]{images/fwl_3_lin.pdf}
 %\caption{$Lin(x, z)$}
 \label{fig:fwl_3_lin}}
-\caption{\subref{fig:fwl_3_3d}: Point A stands for the origin, B — $\hat\gamma z$, C — $x$, D — $\hat\alpha z$, E — intersection of vector $x$ and line parallel to $\tilde x$,
+\caption{\subref{fig:fwl_3_3d}: Point A stands for the origin, B — $\hat\gamma z$,
+C — $x$, D — $\hat\alpha z$, E — intersection of vector $x$ and line parallel to $\tilde x$,
 F — $\hat\beta_1^{(1)} x$, G — $\hat\beta_1^{(2)} \tilde{x}$; \subref{fig:fwl_3_lin}: $Lin(x,z)$.}
 \end{center}
 \end{figure}
 
-In Figure~\ref{fig:fwl_3_lin} segments AF and BH = DG stand for $\hat\beta_1^{(1)}x$ and $\hat\beta_1^{(2)}\tilde x$ respectively,
-while segments AC and BC represent $x$ and $\tilde{x}$. Having two congruent angles, triangles ABC and FHC are simillar.
+In Figure~\ref{fig:fwl_3_lin} segments AF and BH = DG stand for $\hat\beta_1^{(1)}x$
+and $\hat\beta_1^{(2)}\tilde x$ respectively, while segments AC and BC represent $x$ and $\tilde{x}$.
+Having two congruent angles, triangles ABC and FHC are simillar.
 Then, it follows:
 \[
 \frac{AF}{AC} = \frac{BH}{BC} \Leftrightarrow \frac{\hat\beta_1^{(1)}x}{x} = \frac{\hat\beta_1^{(2)}\tilde x}{\tilde x} \Leftrightarrow \hat\beta_1^{(1)} = \hat\beta_1^{(2)}
@@ -697,7 +715,102 @@ Then, it follows:
 
 %\section{Geometric properties of distributions}
 
-%\section{Partial correlation}
+\section{Partial correlation}
 
+\subsection{Definition of partial correlation}
+
+\marginnote{
+Partial correlation is the measure of degree of dependence between two random
+variables while controlling for the effect of other random variables:
+\[
+\pCorr(X,Y; Z) = \frac{\pCov(X,Y;Z)}{\sqrt{\pVar(X;Z)\pVar(Y;Z)}}
+\]
+where $\pVar(X;Z) = \Var(X - \alpha Z)$, $\alpha$ is such a constant that $\Cov(X - \alpha Z, Z) = 0$,
+and $\pCov(X,Y; Z) = \Cov(X - \alpha Z, Y - \beta Z)$, $\alpha$, $\beta$ are such
+constants that $\Cov(X - \alpha Z, Z) = \Cov(Y - \beta Z, Z) = 0$
+}
+
+Partial correlation can be defined into two ways.
+We will provide both definitions and show their equivalence.
+
+\begin{definition}
+Partial correlation between random variables $X$ and $Y$ holding random variable $Z$
+fixed is the correlation coefficient between the residuals in regression of $X$ onto
+$Z$ and the residuals in regression of $Y$ onto $Z$.
+\end{definition}
+
+Firstly, we project random variable $X$ onto $Z$, which yields $\E(X)$.
+The residuals in this regression are $X - \E(X)$ — a vector in $Lin^{\perp}(Z)$.
+We will call this variable `centered' and label it as $\widetilde X$.
+Repeating this step for $Y$ yields `centerd' variable $\tilde Y = Y - \E(Y) \in Lin^{\perp}(Z)$.
+The angle between $\widetilde X$ and $\widetilde Y$ ($\varphi$ in Figure~\ref{fig:pcorr_def1})
+is the correaletion coefficient between these `centred' random variables and
+the partial correlaiton between the original ones.
+
+\begin{figure}
+  \centering
+  \includegraphics[width=0.55\linewidth]{images/partial_corr.pdf}
+  \caption{Partial correlation between $X$ and $Y$ while $Z$ is fixed.}
+  \label{fig:pcorr_def1}
+\end{figure}
+
+\begin{definition}
+Partial correlaiton between random variables $X$ and $Y$ holding random variable $Z$
+fixed is the geometric mean between the coefficient $\hat \beta_{XY}$ in regression
+\[
+\hat X = \hat \beta_{XY} Y + \hat \beta_{XZ} Z
+\]
+and the coefficinent $\hat \beta_{YX}$ in regression
+\[
+\hat Y = \hat \beta_{YX} X + \hat \beta_{YZ} Z
+\]
+which has the same sign as the coefficients $\hat \beta_{XY}$ and $\hat \beta_{YX}$.
+\end{definition}
+
+Following the definition, we need to start with regressing variable $X$ onto
+$Y$ and $Z$. Then, the vector we obtained $\hat X$ can be broken up into the sum of
+$\hat \beta_{XY} Y$ and $\hat \beta_{XZ} Z$.
+Projecting $\hat \beta_{XY} Y$ onto $Lin^{\perp}(Z)$ we results in a vector
+$\alpha \widetilde Y$ where $\widetilde Y = Y - \E(Y)$ is the projection of $Y$ onto $Lin^{\perp}(Z)$.
+
+By the properties of similar triangles
+\[
+\frac{\beta_{XY} Y}{Y} = \frac{\alpha \widetilde Y}{\widetilde Y} \Leftrightarrow \beta_{XY} = \alpha
+\]
+
+In the same way we perform a regression of $Y$ onto $X$ and $Z$ and repeat the
+same steps as for $X$. Finally, we get the whole picture:
+
+\begin{figure}[ht!]
+\begin{center}
+\subfigure[]{
+\includegraphics[width=0.55\linewidth]{images/part_corr_2.pdf}
+\label{fig:part_corr_alt}}
+%\hspace{4ex}
+\subfigure[]{
+\includegraphics[width=0.35\linewidth]{images/part_corr_2_lin.pdf}
+\label{fig:part_corr_alt_lin}}
+\caption{\subref{fig:part_corr_alt}: Alternative definition of the partial correlation;
+\subref{fig:part_corr_alt_lin}: $Lin^{\perp}(Z)$.}
+\end{center}
+\end{figure}
+
+Having plotted $Lin^{\perp}(Z)$ now we can express $\cos \varphi$ in terms of $\beta_{XY}$
+and $\beta_{YX}$
+
+\begin{equation}\label{eq:part_cor_cos}
+\begin{split}
+\cos \varphi &= \frac{\vert \beta_{XY} \widetilde Y \vert}{\vert \widetilde X \vert} = \vert \beta_{XY} \vert \\
+\cos \varphi &= \frac{\vert \beta_{YX} \widetilde X \vert}{\vert \widetilde Y \vert} = \vert \beta_{YX} \vert \\
+\cos^2 \varphi &= \vert \beta_{XY} \beta_{YX} \vert \stackrel{sign(\beta_{XY}) = sign(\beta_{YX})}{=} \beta_{XY} \beta_{YX}
+\end{split}
+\end{equation}
+
+Recall that the angle $\varphi$ can be interpreted as the partial correlation
+between $X$ and $Y$ holding $Z$ fixed, so it follows form equaitions~\eqref{eq:part_cor_cos}
+
+\[
+\pCorr^2(X,Y; Z) = \cos^2 \varphi = \beta_{XY} \beta_{YX}
+\]
 
 \end{document}
