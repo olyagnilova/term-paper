@@ -233,7 +233,7 @@ After that we will project this new vector $\tilde x$ onto $Lin^{\perp}(\mathbf{
 By the properties of projection it is of no difference whether to project
 the whole vector $\tilde x$ or project its parts $\alpha \mathbf{1}$
 and $\beta x$ — the result is the same.
-So, while $\beta x$ is projected onto a span of $x^c$, the projection of $\alpha \mathbf{1}$
+So, while $\beta x$ is projected onto the span of $x^c$, the projection of $\alpha \mathbf{1}$
 onto the orthohgonal space $Lin^{\perp}(\mathbf{1})$ yields zero as demonstrated
 in Figure~\ref{fig:corr_tildex}.
 Moreover, it follows that the angle between $\tilde x$ and $y$ is still $\varphi$.
@@ -289,8 +289,10 @@ has the property
 \end{theorem}
 
 \begin{proof}
-Firstly, we consider the case when $\hat \beta_2 > 0$ so the main picuture is of the form depicted in Figure~\ref{fig:corr_pos_base}.
-It has been shown earlier that the correlation coefficient represents the angle betweem two random vectors.
+Firstly, we consider the case when $\hat \beta_2 > 0$ and introduce the base
+picuture of the proof as depicted in Figure~\ref{fig:corr_pos_base}.
+It has been shown earlier that the correlation coefficient represents the angle
+betweem two random vectors.
 So in order to complete the proof we need to find the appropriate angles and compare them.
 
 \begin{figure}[h!]
@@ -812,5 +814,72 @@ between $X$ and $Y$ holding $Z$ fixed, so it follows form equaitions~\eqref{eq:p
 \[
 \pCorr^2(X,Y; Z) = \cos^2 \varphi = \beta_{XY} \beta_{YX}
 \]
+
+\subsection{Partial correlation as correlaiton between residuals}
+
+\marginnote{
+???
+}
+
+\begin{theorem}
+Partial correlaiton between $X$ and $Y$ holding $Z$ fixed is the (-?)
+correlaiton coefficient betwenn the residuals $\hat u$ in the regeression model
+\[
+X = \alpha_1 Y + \alpha_2 Z + u
+\]
+and the residuals $\hat v$ in the model
+\[
+Y = \beta_1 Z + \beta_2 Z + v
+\]
+\end{theorem}
+
+\begin{proof}
+The first step is to find the residuals in the mentioned regresisions.
+For example, in order to get $\hat u$ we regress $X$ onto $Lin(Y,Z)$
+which results in $\hat X$. Then we take the difference $X - \hat X = \hat u$
+and project it as well as $X$ itself onto $Lin^{\perp}(Z)$ as demonstrated
+in Figure~\ref{fig:pcorr_t_x}.
+
+Figure~\ref{fig:pcorr_t_y} shows the same step for obtainig $\hat v$.
+
+\begin{figure}[ht!]
+\begin{center}
+\subfigure[]{
+\includegraphics[width=0.45\linewidth]{images/pcorr_theorem_x.pdf}
+\label{fig:pcorr_t_x}}
+%\hspace{4ex}
+\subfigure[]{
+\includegraphics[width=0.45\linewidth]{images/pcorr_theorem_y.pdf}
+\label{fig:pcorr_t_y}}
+\caption{\subref{fig:pcorr_t_x}: $\hat u$ form regression of x onto $Y$ and $Z$, $\hat u$ projected;
+\subref{fig:pcorr_t_y}: $\hat v$ from regression of $Y$ onto $X$ and $Z$, $\hat v$ projected.}
+\end{center}
+\end{figure}
+
+After all we put these figure together and the goal is to find the angle between
+the red and blue lines which is the same as the angle between the dashed
+red and blue lines. However, before that we need to apply translating to them to
+get this angle as shown in Figure~\ref{fig:pcorr_t_lin}. Finally, using the properties of
+complementary angles, angles in triangles and parallelograms
+we conclude that the angle between the residuals $\tilde u$ and $\tilde v$
+is eqaul to $\varphi$.
+
+\begin{figure}[ht!]
+\begin{center}
+\subfigure[]{
+\includegraphics[width=0.45\linewidth]{images/pcorr_t_xy.pdf}
+\label{fig:pcorr_t_xy}}
+%\hspace{4ex}
+\subfigure[]{
+\includegraphics[width=0.45\linewidth]{images/pcorr_t_lin.pdf}
+\label{fig:pcorr_t_lin}}
+\caption{\subref{fig:pcorr_t_x}: The residuals of both regressions;
+\subref{fig:pcorr_t_y}: $Lin^{\perp}(Z)$.}
+\end{center}
+\end{figure}
+
+
+\end{proof}
+
 
 \end{document}
