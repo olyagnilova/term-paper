@@ -109,9 +109,215 @@ sorting = none]{biblatex}
 
 %\section{Literature review}
 
+\section{Geometric interpretation of random variables}
+
+The fundamental part to start with is defining the geometric properties of random
+variables using some concepts of linear algebra.
+
+
+
+Consider the vector space which consists of all random variables with finite
+mean and variance.
+We will regard each point in this space (or vector that correponds to that point
+in terms of linear algebra) a random variable.
+We define the scalar product of two random variables $X$ and $Y$ to be
+\[
+\langle X, Y \rangle = \Cov(X,Y).
+\]
+It is of no difficulty to check that the definition satisfies the properties
+of scalar product assuming that $X$ and $Y$ are the same random variables
+if $\P(X=Y)=1$.
+
+Having defined the inner product, we are now able to introduce the squared
+length of a random variable $X$ which is
+\[
+\lVert X \rVert^2 = \langle X, X \rangle = \Cov(X,X) = \Var(X),
+\]
+so the length is simply the square root of this expression, i.e., the~standard
+deviation of $X$ ($\sigma_X$).
+
+Recall that for any non-random vectors $\vec{a}$ and $\vec{b}$ the angle
+between them is calculated with the formula
+\[
+\cos(\vec{a}, \vec{b}) = \frac{\langle \vec{a},  \vec{a}\rangle}{|\vec{a}| |\vec{b}|}.
+\]
+The same applies for the random variables and it is already clear that
+two random variables are uncorrelated if and only if their scalar product
+equals to $0$. Additionally, it means that these two random variables
+are orthogonal in the vector space.
+
+The analogue for $cos(\vec{a}, \vec{b})$ in the vector space of all the random
+variables is the correlation between two of them:
+\[
+\Corr(X,Y) = \frac{\Cov(X,Y)}{\sqrt{\Var(X)\Var(Y)}} = \frac{\langle X, Y \rangle}{\sqrt{\lVert X \rVert^2 \lVert Y \rVert^2}}.
+\]
+From the equivalence of $\Corr(X,Y)$ to the $\cos(\vec{a}, \vec{b})$ it
+automatically follows that the correlation coefficient can range from $-1$ to $1$.
+
+A useful property of the geoemtry of random variables is that all the
+geometric theorems still hold. For instance, the Pythogorean theorem can
+be formulated as follows: if the ranadom variables $X$ and $Y$ are uncorrelated
+(which implies that they are orthogonal), then the variance of their sum equals
+the sum of their variances:
+\[
+\Var(X + Y) = \sigma^2_{X+Y} = \sigma^2_{X} + \sigma^2_{Y} = \Var(X) + \Var(Y).
+\]
+Translated to the non-random language, assumption of uncorrelatedness correspnds
+to the right triangle setting, the variance of the sum of two random variables
+stands for the hypotenuse squared and the sum of the variances is the sum of
+the legs squared.
+
+\begin{figure}[h!]
+\begin{center}
+\includegraphics[width=0.4\linewidth]{images/rv_pythagorean.pdf}
+\caption{The Pythagorean theorem for random variables $X$ and $Y$.}
+\label{fig:rv_pyth}
+\end{center}
+\end{figure}
+
+Another important geometric tool is projection.
+Recall that for any two vectors the scalar product $\langle \vec{a}, \vec{b} \rangle$
+can be interpreted as the length of projected $\vec{b}$ multuplied by the length of $\vec{a}$.
+The projection itself is $cos(\vec{a}, \vec{b}) \vec{b}$.
+Same holds for the random variables.
+The projection of such a random variable $Y$ onto $\{cX| c \in \mathbb{R}\}$ is
+$\hat Y = \Corr(X,Y) \cdot Y$.
+
+\begin{figure}[h!]
+\begin{center}
+\includegraphics[width=0.4\linewidth]{images/rv_proj.pdf}
+\caption{The projection of a random variable $Y$ onto the line spanned by
+a random varibale $X$.}
+\label{fig:rv_proj}
+\end{center}
+\end{figure}
+
+Note that the squared lengths of the leg adjacent to $\varphi$ and the
+hypotenuse are $\Var(\hat Y)$ and $\Var(Y)$.
+So, the Figure~\ref{fig:rv_proj} gives a useful expression for the correlation
+coefficient squared:
+\[
+\Corr^2(X,Y) = \frac{\Var(\hat Y)}{\Var(Y)}.
+\]
+
+\subsection{The law of iterated expectations}
+
+\marginnote{
+Here is the proof for the case when $X$ and $Y$ are both discrete. Let $\E(Y|X) = g(X)$.
+\begin{align*}
+\E(g(X)) &= \sum_x g(x) \P(X=x) \\
+&= \sum_x \left( \sum_y y \P(Y=y|X=x) \right) \P(X=x) \\
+&= \sum_x \sum_y y  \P(X=x) \P(Y=y|X=x)  \\
+&= \sum_y y \sum_x \P(X=x, Y=y) \\
+&= \sum_y y \P(Y=y) \\
+&= \E(Y)
+\end{align*}
+The proof in case of continous random variables is absolutely analogous.
+}
+
+\begin{theorem}
+For any random variable $X$ and $Y$,
+\[
+\E(\E(X|Y)) = \E(Y).
+\]
+\end{theorem}
+
+\begin{proof}
+
+Consider the vector space of all the random variables.  The random variable
+which can be described as functions $h(X)$ of $X$ form a subspace of that vector
+space, represented as a plane $\alpha$ in Figure~\ref{fig:adams}.
+Another subspace is a subspace of constants, denoted as a vector $\mathbf{1} \in \alpha$.
+
+In order to obtain $\E(Y|X)$, first, we need to project $Y$ onto the subspace
+corresponding to $X$. As a result of this step, we get $\E(Y|X)$ — the function
+of $X$ that predicts $Y$ the best. Next, projecting $\E(Y|X)$ onto the space
+of all constants, we end up with $E(Y)$.
+
+Notice that the vector $Y - \E(Y|X)$ (which is also called the residual) is
+perpendicular to the plane $\alpha$. Moreover, the vecotr $\E(Y|X) - E(Y)$ is
+perpendicular to the vector of constants $\mathbf{1}$. Thus, we can apply
+the theorem of three perpendiculars and conclude that the vector $Y - \E(Y)$ is
+also perpendicular to the vector of constants $\mathbf{1}$.
+
+So, we showed that the expectation of the random variable $Y$ can be obtained either
+in two steps or by its direct projection onto the subpace of constans.
+
+\begin{figure}[h!]
+\begin{center}
+\includegraphics[width=0.6\linewidth]{images/adams.pdf}
+\caption{The law of iterated expectations. Equivalence of the two-step projecttion
+and direct projection of $Y$ onto $\mathbf{1}$.}
+\label{fig:adams}
+\end{center}
+\end{figure}
+
+\end{proof}
+
+
+\subsection{MSE decomposition}
+
+\marginnote{
+\begin{align*}
+MSE(\hat \theta) &= \E((\hat \theta - \theta)^2) \\
+&= \E \left[ \left( \hat \theta - \E(\hat \theta) +  \E(\hat \theta) - \theta \right) \right] \\
+&= \E \left[ \left( \hat \theta - \E(\hat \theta) \right)^2 + 2 \left( (\hat \theta - \E(\hat \theta)) (\E(\hat \theta) - \theta ) \right) \right. \\
+&+ \left. \left( \E(\hat \theta) - \theta  \right)^2 \right] \\
+&= \E \left[\left( \hat \theta - \E(\hat \theta) \right)^2 \right] \\
+&+ 2 \E \left[\left( (\hat \theta - \E(\hat \theta)) (\E(\hat \theta) - \theta ) \right) \right] \\
+&+ \E \left[\left( \E(\hat \theta) - \theta  \right)^2 \right] \\
+&= \E \left[\left( \hat \theta - \E(\hat \theta) \right)^2 \right] \\
+&+ 2 (\E(\hat \theta - \E(\hat \theta))) \E(\hat \theta - \E(\hat \theta)) \\
+&+ \E \left[\left( \E(\hat \theta) - \theta  \right)^2 \right] \\
+&= \E \left[\left( \hat \theta - \E(\hat \theta) \right)^2 \right] + \E \left[\left( \E(\hat \theta) - \theta  \right)^2 \right] \\
+&= \Var(\hat \theta) + \E \left[\left( \E(\hat \theta) - \theta  \right)^2 \right]
+\end{align*}
+}
+
+\begin{theorem}
+The mean squared error of an estimator $\hat \theta$ with respect to an unknown
+parameter $\theta$ defined as $MSE(\hat \theta) = \E((\hat \theta - \theta)^2)$
+can be decomposed into the sum of the variance of the estimator and its squared bias:
+\[
+MSE(\hat \theta) = \Var(\hat \theta) + \E \left[\left( \E(\hat \theta) - \theta  \right)^2 \right]
+\]
+\end{theorem}
+
+\begin{proof}
+We start with a random variable $\theta$ and its estimate $\hat \theta$ in the
+vector space. We know that an unbiased estimator's projection would be exactly
+the vector representing $\theta$. However, in general it does not have to and
+Figure~JJJJ illustrates this case: the projection of the estimator falls onto
+the line spanned by the vector $\theta$.
+
+Connecting vectors $\theta$ and $\hat \theta$, we obtain the right triangle which
+legs are $\hat \theta - \E(\hat\theta)$, $\E(\hat\theta) - \theta$ and the
+hypotenuse $\hat \theta - \theta$.
+Applying the Pythagorean theorem, we finish the proof:
+\begin{align*}
+\lVert \hat \theta - \theta \rVert^2 &= \lVert \hat \theta - \E(\hat \theta) \rVert^2  + \lVert \E(\hat \theta) - \theta \rVert^2 \\
+\E((\hat \theta - \theta)^2) &= \E((\hat \theta - \E(\hat \theta))^2) + \E((\E(\hat \theta) - \theta)^2) \\
+MSE(\hat \theta) &= \Var(\hat \theta) + \E((\E(\hat \theta) - \theta)^2)
+\end{align*}
+
+\begin{figure}[h!]
+\begin{center}
+\includegraphics[width=0.6\linewidth]{images/mse_decomposed.pdf}
+\caption{Decomposition of mean squred error into the variance and the bias squared.}
+\label{fig:mse_decomposed}
+\end{center}
+\end{figure}
+
+\end{proof}
+
 \section{Regression}
 
-\subsection{Sample correlation}
+The concepts discussed in the following section could also be presented in
+random variables instead of sample ones. As the geometry of sample variables
+is almost of no difference comparing to the random ones, the logic of
+all the theorems is also the same.
+
+\subsection{Geometry of sample variables}
 
 \marginnote{
 \begin{align*}
@@ -120,15 +326,8 @@ sorting = none]{biblatex}
 \end{align*}
 }
 
-The most crucial part in defining correlation geometrically is definig the dot product as it enables to compute the length of a vecotr:
-\[
-|\vec{a}| = \sqrt{\langle \vec{a},  \vec{a}\rangle}
-\]
-and the angle between any two vectors:
-\[
-\cos(\vec{a}, \vec{b}) = \frac{\langle \vec{a},  \vec{a}\rangle}{|\vec{a}| |\vec{b}|}
-\]
-Now we define scalar product of two vectors
+In the same manner which was performed in Section 1, we define
+the scalar product of two sample variables
 $x =
 \begin{pmatrix}
 x_1 \\
@@ -144,31 +343,21 @@ y_n
 \end{pmatrix}$
 as a sample covariation between them:
 \[
-\langle x, y \rangle = \sCov(x, y)
+\langle x, y \rangle = \sCov(x, y).
 \]
 The main characteristics of a vector are its length and direction.
-So, we introduce the length
+Again, we introduce the length
 \[
 \sqrt{\sCov(x,x)} = \sqrt{\sVar(x)} = \sigma_x
 \]
-and the angle between two random vectors
+and the angle between two sample variables
 \[
-\cos(x,y) = \frac{\sCov(x,y)}{\sqrt{\sVar(x)\sVar(y)}} = \sCorr(x,y)
+\cos(x,y) = \frac{\sCov(x,y)}{\sqrt{\sVar(x)\sVar(y)}} = \sCorr(x,y).
 \]
 Note that from the definition of the angle it follows that the sample correlation can range from $-1$ to $1$.
 
-\begin{figure}[h!]
-\begin{center}
-\includegraphics[width=0.4\linewidth]{images/corr_def.pdf}
-\caption{Vector $x$ of length $\sigma_x$ and random vector $y$ of length $\sigma_y$, $\cos \varphi$ is the angle between $x$ and $y$.}
-\label{fig:corr_def}
-\end{center}
-\end{figure}
-
-Another important geometrical tool is projection. Recall that for any two vectors the scalar product $\langle \vec{a}, \vec{b} \rangle$ can be interpreted as the length of projected $\vec{b}$ multuplied by the length of $\vec{a}$.
-The projection itself is $cos(\vec{a}, \vec{b}) \vec{b}$.
-Same holds for the vectors sampled from some distribution.
-The projection of such a vector $y$ onto $\{cx| c \in \mathbb{R}\}$ is $\hat y = \sCorr(x,y) \cdot y$.
+Completely analogus to the case of random variables,
+the projection of such a sample variable $y$ onto $\{cx| c \in \mathbb{R}\}$ is $\hat y = \sCorr(x,y) \cdot y$.
 
 \begin{figure}[h!]
 \begin{center}
@@ -181,7 +370,7 @@ The projection of such a vector $y$ onto $\{cx| c \in \mathbb{R}\}$ is $\hat y =
 Looking at Figure~\ref{fig:corr_proj}, we can interpret the square of sample correlation coefficient.
 Using the fact that $cos^2 \varphi$ is the squared ratio of the leg adjacent to $\varphi$ to hypotenuse, we can conclude that
 \[
-\sCorr^2(x,y) = \frac{\sVar(\hat y)}{\sVar(y)}
+\sCorr^2(x,y) = \frac{\sVar(\hat y)}{\sVar(y)},
 \]
 as the variance of a vector is associated with the square of its length.
 Thus, the sample correlation coefficient squared shows the fraction of variance in $y$ which can be explained
@@ -885,6 +1074,16 @@ is eqaul to $\varphi$.
 \subsection{Normal}
 
 \subsection{Chi-squared}
+
+Consider a random vector $z \in \mathbb{R}^n$ which components are independent
+and follow standard normal distribution, $z_i \sim \mathcal{N}(0,1)$.
+Consider also a fixed $k$-dimensional subspace in $\mathbb{R}^n$ $L$.
+Let the projection of vector $z$ onto the subspace $L$ be $\hat z$ and
+its length squared $Q$
+\[
+Q = \lVert \hat z \rVert^2 = \langle \hat z, \hat z \rangle = \hat z^T \hat z
+\]
+Then $Q$ follows the chi-squared distribution with $k$ degrees of freedom.
 
 \subsection{Student's}
 

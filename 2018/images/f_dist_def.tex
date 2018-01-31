@@ -1,0 +1,46 @@
+\documentclass{article}
+%%%<
+\usepackage{verbatim}
+%%%>
+
+\usepackage{tikz}   %TikZ is required for this to work.  Make sure this exists before the next line
+
+\usepackage{tikz-3dplot} %requires 3dplot.sty to be in same directory, or in your LaTeX installation
+\usepackage{tkz-euclide}
+\usetkzobj{all}
+\usepackage[active,tightpage]{preview}  %generates a tightly fitting border around the work
+\PreviewEnvironment{tikzpicture}
+\setlength\PreviewBorder{2mm}
+
+\begin{document}
+
+%Angle Definitions
+%-----------------
+
+%start tikz picture, and use the tdplot_main_coords style to implement the display
+%coordinate transformation provided by 3dplot
+\tdplotsetmaincoords{40}{130}
+
+\begin{tikzpicture}[tdplot_main_coords]
+
+\coordinate (O) at (0,0,0);
+\coordinate (un) at (0,0,4);
+\coordinate (nun) at (0,0,-2.2);
+\coordinate (hun) at (0,0,3.2);
+\coordinate (z) at (0,3,5);
+\coordinate (hz) at (-1.05,2.05,0);
+
+\draw[->] (O) -- (un) node[anchor=east]{$L_1$};
+\draw[dashed] (O) -- (nun);
+\draw (0,0) ellipse (4.5cm and 1.5cm) node[anchor=east, left=3.2cm]{$L_2$};
+
+\draw[->] (O) -- (z) node[anchor=south]{$z$};
+\draw[->] (O) -- (hz) node[anchor=north]{$H_2 z$};
+\draw[->] (O) -- (hun) node[anchor=east]{$H_1 z$};
+\draw[dashed] (hz) -- (z);
+\draw[dashed] (z) -- (hun);
+\tkzMarkRightAngle[size=0.15](z,hz,O);
+\tkzMarkRightAngle[size=0.15](O,hun,z);
+
+\end{tikzpicture}
+\end{document}
