@@ -38,7 +38,7 @@
 \tkzDefPointBy[projection=onto y--O](hx)
 \tkzGetPoint{p}
 \tkzMarkRightAngle[size=0.15](O,p,x)
-\draw[dashed,->,blue] (p) -- (x) node[midway,below]{\small$\widetilde u$};
+\draw[dashed,->,blue] (p) -- (x) node[midway,near start,above]{\small$\widetilde u$};
 
 \tkzDefLine[parallel=through y](p,x);
 \tkzGetPoint{pu}
@@ -52,18 +52,12 @@
 
 \tkzInterLL(p,pv)(y,pu);
 \tkzGetPoint{pint};
-\draw[->,dashed,blue] (pint) -- (y);
-\draw[dashed,red,->] (p) -- (pint);
+\draw[dashed,red] (p) -- (pint);
 
 \tkzMarkRightAngle[size=0.15](O,y,pint);
-\tkzMarkAngle[size=0.8](y,p,pint);
-\tkzLabelAngle[pos=1,right](y,p,pint){\tiny$\varphi - 90^\circ$}
-\tkzMarkAngle[size=0.8](p,y,h);
-\tkzLabelAngle[pos=1,left](p,y,h){\tiny$\varphi - 90^\circ$}
-\tkzMarkAngle[size=0.2](y,C,p);
-\tkzLabelAngle[pos=0.7](y,C,p){\tiny$180^\circ - \varphi$}
 \tkzMarkAngle[size=0.3,thick](x,p,pint);
-\tkzLabelAngle[pos=0.5](x,p,pint){\footnotesize\textbf{$\varphi$}}
+\tkzMarkAngle[size=0.3,thick](x,C,y);
+\tkzLabelAngle[pos=0.5](x,C,y){\footnotesize\textbf{$180^\circ - \varphi$}}
 
 \end{tikzpicture}
 \end{document}
