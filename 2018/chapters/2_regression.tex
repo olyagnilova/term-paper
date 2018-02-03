@@ -288,11 +288,11 @@ From this picture we can immediately derive $\sqrt{RSS}$ as by definition this i
 \begin{figure}[h!]
 \begin{center}
 \subfigure[]{
-\includegraphics[width=0.4\linewidth]{figures/tss_sum_base.pdf}
+\includegraphics[width=0.4\linewidth]{figures/02_rss_ess_tss_yhat.pdf}
 \label{fig:tss_base} }
 \hspace{4ex}
 \subfigure[]{
-\includegraphics[width=0.4\linewidth]{figures/tss_sum_rss.pdf}
+\includegraphics[width=0.4\linewidth]{figures/02_rss_ess_tss_sqr_rss.pdf}
 \label{fig:tss_rss}}
 \caption{\subref{fig:tss_base}: Vectors $y \in \mathbb{R}^{n-2}$ and $\hat y \in Lin(x, \mathbf{1})$; \subref{fig:tss_rss}: Residual sum of squares.}
 \end{center}
@@ -306,11 +306,11 @@ Now we both project $y$ and $\hat y$ onto $\mathbf{1}$ and following the definit
 \begin{figure}[h!]
 \begin{center}
 \subfigure[]{
-\includegraphics[width=0.4\linewidth]{figures/tss_sum_tss.pdf}
+\includegraphics[width=0.4\linewidth]{figures/02_rss_ess_tss_sqr_tss.pdf}
 \label{fig:tss_tss}}
 \hspace{4ex}
 \subfigure[]{
-\includegraphics[width=0.4\linewidth]{figures/tss_sum_ess.pdf}
+\includegraphics[width=0.4\linewidth]{figures/02_rss_ess_tss_sqr_ess.pdf}
 \label{fig:tss_ess}}
 \caption{\subref{fig:tss_tss}: Total sum of squares; \subref{fig:tss_ess}: Explained sum of squares.}
 \end{center}
@@ -326,7 +326,7 @@ hypotenuse $\sqrt{TSS}$:
 \]
 
 \begin{figure}[h!]
-\center{\includegraphics{figures/tss_sum_final.pdf}}
+\center{\includegraphics{figures/02_rss_ess_tss_final.pdf}}
 \caption{$(\sqrt{RSS})^2 + (\sqrt{ESS})^2 = (\sqrt{TSS})^2$}
 \label{fig:tss_final}
 \end{figure}
@@ -371,12 +371,12 @@ R^2 = \frac{ESS}{TSS}
 \]
 we conclude that its geometric interpretaion is
 \[
-\sqrt{R^2} = \frac{\sqrt{ESS}}{\sqrt{TSS}} = \cos \varphi
+R^2 = \frac{ESS}{TSS} = \cos^2 \varphi
 \]
 as shown in Figure~\ref{fig:r_sq_angle}.
 
 \begin{figure}
-  \center{\includegraphics{figures/r_sq_ss.pdf}}
+  \center{\includegraphics{figures/02_determination_coefficient.pdf}}
   \caption{Determination coefficient as squared $\cos \varphi$}
   \label{fig:r_sq_angle}
 \end{figure}
@@ -441,13 +441,13 @@ By the theorem of three perpendiculars, $\bar y = \bar \hat y$ which is shown in
 \begin{figure}[ht!]
 \begin{center}
 \subfigure[]{
-\includegraphics[width=0.4\linewidth]{figures/averages_1.pdf}
+\includegraphics[width=0.4\linewidth]{figures/02_averages_yhat_decomposed.pdf}
 \label{fig:averages_lin} }
 \hspace{4ex}
 \subfigure[]{
-\includegraphics[width=0.4\linewidth]{figures/averages_2.pdf}
+\includegraphics[width=0.4\linewidth]{figures/02_averages_final.pdf}
 \label{fig:averages_bars}}
-\caption{\subref{fig:averages_lin}: Regression of $y$ on $Lin(\mathbb{1},x)$; \subref{fig:averages_bars}: Regression of $y$ and $\hat y$ on $\mathbb{1}$.}
+\caption{\subref{fig:averages_lin}: Regression of $y$ on $Lin(\mathbf{1},x)$; \subref{fig:averages_bars}: Regression of $y$ and $\hat y$ on $\mathbf{1}$.}
 \end{center}
 \end{figure}
 
@@ -495,35 +495,43 @@ Consider another regresison
 \begin{equation}  \label{eq:fwl_2}
 M_1 y = M_1 X_2 \beta_2 + M_1 u
 \end{equation}
-where $M_1 = I - P_1$ projects onto the orthogonal complement of the column space of $X_1$ and $P_1 = X_1(X_1^TX_1)^{-1}X_1^T$ is the projection onto the column space of $X_1$.
-Then the estimate of $\beta_2$ from regression~\ref{eq:fwl_1} will be the same as the estimate from regression~\ref{eq:fwl_2}.
+where $M_1 = I - P_1$ projects onto the~orthogonal complement of the~column space~of
+$X_1$ and $P_1 = X_1(X_1^TX_1)^{-1}X_1^T$ is the~projection onto the~column space of~$X_1$.
+Then the~estimate of $\beta_2$ from regression~\ref{eq:fwl_1} will be the~same
+as the~estimate from regression~\ref{eq:fwl_2}.
 \end{theorem}
 
+There are two ways to~visualize the~proof of~the~Frisch-Waugh-Lovell theorem
+using geometric concepts. Both are presented below.
+
 \begin{proof}
-Geometrical proof will be presented for the following model:
+1.~Consider the following model:
 \begin{equation} \label{eq:fwl_proof}
 y_i = \beta_1 x_i + \beta_2 z_i + u_i
 \end{equation}
 
-We start with regression `all-at-once' and will distinct its coefficients with index $(1)$. The only step in obtaining $\beta_1^{(1)}$ is regressing $y$ on $Lin(x,z)$ and then expanding $\hat y$ as a linear combination of basis vectors $x$ and $z$,
-which is shown in Figure~\ref{fig:fwl_1_regression_3d}. Figure~\ref{fig:fwl_1_regression_lin} depicts $Lin(x, z)$.
+We start with regression `all-at-once' and will distinct its coefficients with~index $(1)$.
+The~only step in~obtaining $\beta_1^{(1)}$ is regressing $y$ on~$Lin(x,z)$ and
+then expanding $\hat y$ as a~linear combination of~basis vectors $x$ and $z$,
+which is shown in~Figure~\ref{fig:fwl_1_regression_3d}. Figure~\ref{fig:fwl_1_regression_lin}
+depicts $Lin(x, z)$.
 
 \begin{figure}[ht!]
 \begin{center}
 \subfigure[]{
-\includegraphics[width=0.4\linewidth]{figures/fwl_1_regression.pdf}
-%\caption{Regression of $y$ on $Lin(x,z)$} %% подпись к рисунку
+\includegraphics[width=0.4\linewidth]{figures/02_fwl_v1_yhat_decomposed.pdf}
 \label{fig:fwl_1_regression_3d} }
 \hspace{4ex}
 \subfigure[]{
-\includegraphics[width=0.4\linewidth]{figures/fwl_1_regression_lin.pdf}
-%\caption{$Lin(x, z)$}
+\includegraphics[width=0.4\linewidth]{figures/02_fwl_v1_yhat_decomposed_lin.pdf}
 \label{fig:fwl_1_regression_lin}}
 \caption{\subref{fig:fwl_1_regression_3d}: Regression of $y$ on $Lin(x,z)$; \subref{fig:fwl_1_regression_lin}: $Lin(x, z)$.}
 \end{center}
 \end{figure}
 
-As for the model~\ref{eq:fwl_2}, where several regressions are performed consecutively, we start with regressing $y$ on $z$, resulting in $\tilde{y}$, which we will refer to as ``cleansed'' $y$.
+As for the~model~\ref{eq:fwl_2}, where several regressions are performed consecutively,
+we start with regressing $y$~on~$z$, resulting in $\tilde{y}$,
+which we will refer~to as~`cleansed' $y$.
 
 \begin{equation}\label{eq:fwl_2_y_clean}
 \begin{aligned}
@@ -533,7 +541,7 @@ y &= \alpha z + \varepsilon \\
 \end{aligned}
 \end{equation}
 
-Following that, $x$ is regressed on $z$, resulting in $\tilde{x}$ — ``cleansed'' $x$.
+Following that, $x$ is regressed on $z$, resulting in $\tilde{x}$ — `cleansed' $x$.
 
 \begin{equation}\label{eq:fwl_2_x_clean}
 \begin{aligned}
@@ -545,19 +553,19 @@ x &= \gamma z + \nu \\
 
 Geometric results of these two steps are presented in~\ref{fig:fwl_2_regression_first}.
 
-Finally, `cleansed' $y$ must be regressed on `cleansed' $x$. However, it cannot be performed immediately as $\tilde{y}$ and $\tilde{x}$ are skew lines.
-So at first, we fix this problem by translation and after taht obtain $\hat\beta_1^{(2)}\tilde x$ (see Figure~\ref{fig:fwl_2_regression_trans}).
+Finally, `cleansed' $y$ must be regressed on `cleansed' $x$.
+However, it cannot be performed immediately as $\tilde{y}$ and $\tilde{x}$ are skew lines.
+So at first, we fix this problem by translation and after taht obtain
+$\hat\beta_1^{(2)}\tilde x$ (see Figure~\ref{fig:fwl_2_regression_trans}).
 
 \begin{figure}[ht!]
 \begin{center}
 \subfigure[]{
-\includegraphics[width=0.4\linewidth]{figures/fwl_2_regression.pdf}
-%\caption{Regression of $y$ on $Lin(x,z)$} %% подпись к рисунку
+\includegraphics[width=0.4\linewidth]{figures/02_fwl_v1_cleansed_variables.pdf}
 \label{fig:fwl_2_regression_first} }
 \hspace{4ex}
 \subfigure[]{
-\includegraphics[width=0.4\linewidth]{figures/fwl_2_regression_translation.pdf}
-%\caption{$Lin(x, z)$}
+\includegraphics[width=0.4\linewidth]{figures/02_fwl_v1_translation.pdf}
 \label{fig:fwl_2_regression_trans}}
 \caption{\subref{fig:fwl_2_regression_first}: Regression of $y$ on $z$ and of $x$ on $z$;
 \subref{fig:fwl_2_regression_trans}: Translation of $\tilde{x}$.}
@@ -569,13 +577,11 @@ Now, let us picture all the results in one figure and mark some main points.
 \begin{figure}[ht!]
 \begin{center}
 \subfigure[]{
-\includegraphics[width=0.4\linewidth]{figures/fwl_3_3d.pdf}
-%\caption{Regression of $y$ on $Lin(x,z)$} %% подпись к рисунку
+\includegraphics[width=0.4\linewidth]{figures/02_fwl_v1_final.pdf}
 \label{fig:fwl_3_3d} }
 \hspace{4ex}
 \subfigure[]{
-\includegraphics[width=0.4\linewidth]{figures/fwl_3_lin.pdf}
-%\caption{$Lin(x, z)$}
+\includegraphics[width=0.4\linewidth]{figures/02_fwl_v1_final_lin.pdf}
 \label{fig:fwl_3_lin}}
 \caption{\subref{fig:fwl_3_3d}: Point A stands for the origin, B — $\hat\gamma z$,
 C — $x$, D — $\hat\alpha z$, E — intersection of vector $x$ and line parallel to $\tilde x$,
@@ -583,11 +589,59 @@ F — $\hat\beta_1^{(1)} x$, G — $\hat\beta_1^{(2)} \tilde{x}$; \subref{fig:fw
 \end{center}
 \end{figure}
 
-In Figure~\ref{fig:fwl_3_lin} segments AF and BH = DG stand for $\hat\beta_1^{(1)}x$
+In Figure~\ref{fig:fwl_3_lin} segments $AF$ and $BH = DG$ stand for $\hat\beta_1^{(1)}x$
 and $\hat\beta_1^{(2)}\tilde x$ respectively, while segments AC and BC represent $x$ and $\tilde{x}$.
 Having two congruent angles, triangles ABC and FHC are simillar.
 Then, it follows:
 \[
 \frac{AF}{AC} = \frac{BH}{BC} \Leftrightarrow \frac{\hat\beta_1^{(1)}x}{x} = \frac{\hat\beta_1^{(2)}\tilde x}{\tilde x} \Leftrightarrow \hat\beta_1^{(1)} = \hat\beta_1^{(2)}
 \]
+
+2. Alternatively, we could implement a~concept close to the~partial correlation.
+In the~same model~\ref{eq:fwl_proof} we wiil treat $z$ vector fixed and again
+consecutively cleanse the $x$ and $y$ variables by projecting them onto
+the~space orthogonal to $z$, i.e., $Lin^\perp(z)$ as demonstrated in Figure~\ref{fig:fwl_v2_rcleansed}.
+Then we perform a~regression of the~`cleansed' $\tilde y$ on the~`cleansed' $\tilde x$
+(see Figure\ref{fig:fwl_v2_regression_cleansed}).
+
+\begin{figure}[ht!]
+\begin{center}
+\subfigure[]{
+\includegraphics[width=0.45\linewidth]{figures/02_fwl_v2_cleansed_variables.pdf}
+\label{fig:fwl_v2_rcleansed}}
+\subfigure[]{
+\includegraphics[width=0.45\linewidth]{figures/02_fwl_v2_cleansed_regression.pdf}
+\label{fig:fwl_v2_regression_cleansed}}
+\caption{\subref{fig:fwl_2_regression_first}: `Cleansed' variables $\tilde x$ and $\tilde y$;
+\subref{fig:fwl_2_regression_trans}: `Cleansed' $\tilde y$ regressed on `cleansed' $\tilde{x}$.}
+\end{center}
+\end{figure}
+
+Now we show that the~latter regression produces $\hat \beta_1$ coefficient which
+is exatly the coefficient from the~`one-step' regression of~original $y$ onto
+original $x$ and $z$. Recall that the~vector $y$ can be split~up into a~sum of
+some multiple of $x$ and some multiple of $z$. Since the second term is
+the~orthogonal component its projection yields zero. The~multiple of $x$
+is equal to $\hat \beta_1$ by construction.
+
+Assume that the coefficient at $\tilde x$ is some unknown variable $\hat \delta$.
+Then consider the similar triangles in the $Lin(x,z)$. From the~proportions
+we obtain:
+\[
+\frac{CE}{CA} = \frac{CD}{CB} \Leftrightarrow \frac{\hat \beta_1 x}{x} = \frac{\hat \delta \tilde x}{\tilde x} \Rightarrow \hat \beta_1 = \hat \delta
+\]
+
+\begin{figure}[ht!]
+\begin{center}
+\subfigure[]{
+\includegraphics[width=0.45\linewidth]{figures/02_fwl_v2_similar_triangles.pdf}
+\label{fig:fwl_v2_triangles}}
+\subfigure[]{
+\includegraphics[width=0.45\linewidth]{figures/02_fwl_v2_final.pdf}
+\label{fig:fwl_v2_final}}
+\caption{\subref{fig:fwl_2_regression_first}: Similar triangles: $\bigtriangleup ABC \sim \bigtriangleup EDC$;
+\subref{fig:fwl_2_regression_trans}: Alternative proof for the Frisch-Waugh-Lovell theorem.}
+\end{center}
+\end{figure}
+
 \end{proof}
