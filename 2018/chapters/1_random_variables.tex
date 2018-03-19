@@ -1,4 +1,4 @@
-\section{Geometric interpretation of random variables}
+\section{Geometric interpretation of random variables}\label{rvs}
 
 The fundamental part to start with is defining the geometric properties of random
 variables using some concepts of linear algebra.
@@ -14,6 +14,12 @@ We define the scalar product of two random variables $X$ and $Y$ to be
 It is of no difficulty to check that the definition satisfies the properties
 of scalar product assuming that $X$ and $Y$ are the same random variables
 if $\P(X=Y)=1$.
+
+\begin{marginfigure}
+\includegraphics{figures/01_corr_def.pdf}
+\caption{Geometric representation of random variables.}
+\label{fig:corr_def}
+\end{marginfigure}
 
 Having defined the inner product, we are now able to introduce the squared
 length of a random variable $X$ which is
@@ -41,6 +47,12 @@ variables is the correlation between two of them:
 From the equivalence of $\Corr(X,Y)$ to the $\cos(a, b)$ it
 automatically follows that the correlation coefficient can range from $-1$ to $1$.
 
+\begin{marginfigure}[10\baselineskip]
+\includegraphics{figures/01_pythagorean_theorem.pdf}
+\caption{The Pythagorean theorem for random variables $X$ and $Y$.}
+\label{fig:rv_pyth}
+\end{marginfigure}
+
 A useful property of the geoemtry of random variables is that all the
 geometric theorems still hold. For instance, the Pythogorean theorem can
 be formulated as follows: if the ranadom variables $X$ and $Y$ are uncorrelated
@@ -54,14 +66,6 @@ to the right triangle setting, the variance of the sum of two random variables
 stands for the hypotenuse squared and the sum of the variances is the sum of
 the legs squared.
 
-\begin{figure}[h!]
-\begin{center}
-\includegraphics[width=0.4\linewidth]{figures/01_pythagorean_theorem.pdf}
-\caption{The Pythagorean theorem for random variables $X$ and $Y$.}
-\label{fig:rv_pyth}
-\end{center}
-\end{figure}
-
 Another important geometric tool is projection.
 Recall that for any two vectors the scalar product $\langle a, b \rangle$
 can be interpreted as the length of projected $b$ multuplied by the length of $a$.
@@ -70,14 +74,12 @@ Same holds for the random variables.
 The projection of such a random variable $Y$ onto $\{cX| c \in \mathbb{R}\}$ is
 $\hat Y = \Corr(X,Y) \cdot Y$.
 
-\begin{figure}[h!]
-\begin{center}
-\includegraphics[width=0.4\linewidth]{figures/01_basic_projection.pdf}
+\begin{marginfigure}
+\includegraphics{figures/01_basic_projection.pdf}
 \caption{The projection of a random variable $Y$ onto the line spanned by
 a random varibale $X$.}
 \label{fig:rv_proj}
-\end{center}
-\end{figure}
+\end{marginfigure}
 
 Note that the squared lengths of the leg adjacent to $\varphi$ and the
 hypotenuse are $\Var(\hat Y)$ and $\Var(Y)$.

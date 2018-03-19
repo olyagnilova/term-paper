@@ -278,11 +278,11 @@ onto which the vector was projected. Thus, $\lVert H_1 z \rVert^2 \sim \chi^2_1$
 and $\lVert H_2 z \rVert^2 \sim \chi^2_{k}$.
 Now we can express $T^2$ as a ratio of the per-dimension lengths squared:
 \[
-T^2 = \frac{\lVert H_1 z \rVert^2}{\lVert H_2 z \rVert^2 \ dim L_2}
+T^2 = \frac{\lVert H_1 z \rVert^2}{\lVert H_2 z \rVert^2 / dim L_2}
 \]
 Taking the square root of both sides, we obtain:
 \[
-T = \frac{\lVert H_1 z \rVert}{\lVert H_2 z \rVert  \sqrt{dim L_2}} = \tg \varphi
+T = \frac{\lVert H_1 z \rVert}{\lVert H_2 z \rVert / \sqrt{dim L_2}} = \tg \varphi
 \]
 The latter equlity can be illustarted with a $3$-dimensional example (see Figure~\ref{fig:f_dist}).
 
@@ -311,7 +311,7 @@ t = \frac{\hat \beta_2}{s.e.(\hat\beta_2)}
 Then, we need to express $s.e.(\hat\beta_2)$ in terms of vectors which can be
 plotted. From standard OLS procedure it follows that
 \begin{equation}\label{eq:varbeta2}
-\Var(\hat \beta_2) = \frac{\sigma}{\sum_{i=1}^n (x_i - \bar x)^2}
+\Var(\hat \beta_2) = \frac{\sigma}{\sum\limits_{i=1}^n (x_i - \bar x)^2}
 \end{equation}
 Since actual $\sigma$ is unknown the estimator will be used instead:
 \begin{equation}\label{eq:sigmaest}
@@ -320,10 +320,8 @@ Since actual $\sigma$ is unknown the estimator will be used instead:
 Substituting \eqref{eq:varbeta2} and \eqref{eq:sigmaest} into \eqref{eq:tstat}
 divided by $\sqrt{n-2}$, we obtain
 \begin{align*}
-\frac{t}{\sqrt{n-2}} &= \frac{\hat \beta_2}{\sqrt{n-2}\widehat{s.e.}(\hat\beta_2)} \\
-&= \frac{\hat \beta_2}{\sqrt{n-2}\frac{\hat \sigma}{\sqrt{\sum_{i=1}^n (x_i - \bar x)^2}}} \\
-&= \frac{\hat \beta_2 \sqrt{\sum_{i=1}^n (x_i - \bar x)^2}}{\sqrt{n-2}\frac{\sqrt{\sum_{i=1}^n (y_i - \hat y_i)^2}}{\sqrt{n-2}}} \\
-&= \frac{\hat \beta_2 \vert x^c \vert}{\sqrt{RSS}}
+\frac{t}{\sqrt{n-2}} &= \frac{\hat \beta_2}{\sqrt{n-2}\widehat{s.e.}(\hat\beta_2)} = \frac{\hat \beta_2}{\sqrt{n-2}\frac{\hat \sigma}{\sqrt{\sum\limits_{i=1}^n (x_i - \bar x)^2}}} \\
+&= \frac{\hat \beta_2 \sqrt{\sum\limits_{i=1}^n (x_i - \bar x)^2}}{\sqrt{n-2}\frac{\sqrt{\sum\limits_{i=1}^n (y_i - \hat y_i)^2}}{\sqrt{n-2}}} = \frac{\hat \beta_2 \vert x^c \vert}{\sqrt{RSS}}
 \end{align*}
 where $ \vert x^c \vert = \sqrt{\sum_{i=1}^n (x_i - \bar x)^2}$ is the length of the
 centred vector $x$.
@@ -384,11 +382,6 @@ where $\lVert H_1 z \rVert^2$, $\lVert H_2 z \rVert^2$ are the squared lengths
 of $z$ projected onto $L_1$ and $L_2$ respectively.
 \end{definition}
 
-
-\marginnote{
-numerical example?
-}
-
 Recall that by Theorem~\ref{th:mvn} the projections of a standard noraml vector
 onto orthogonal subspaces are independent.
 Thus, in terms of the Definition~\ref{def:f} $H_1 z$ and $H_2 z$ are independent.
@@ -399,20 +392,19 @@ equal to the dimension of the subspace onto which the vector was projected.
 In other words, $\lVert H_1 z \rVert^2 \sim \chi^2_{dim L_1}$,
 $\lVert H_2 z \rVert^2 \sim \chi^2_{dim L_2}$.
 
+\begin{marginfigure}
+\includegraphics[scale=0.7]{figures/04_f_dist_example.pdf}
+\caption{F-distribution as the ratio of the projection lengths squared
+adjusted to the dimensions of the subspaces.}
+\label{fig:f_dist}
+\end{marginfigure}
+
 Taking the ratio of these length squared, we get the interpretaion
 of the angle between the original vector $z$ and its projection onto $L_1$:
 \[
 tg^2 \varphi = \frac{\lVert H_1 z \rVert^2}{\lVert H_2 z \rVert^2}.
 \]
 Adjusting this ratio to the degrees of freedom, we get the desired definition.
-
-\begin{figure}
-\centering
-\includegraphics[width=0.55\linewidth]{figures/04_f_dist_example.pdf}
-\caption{F-distribution as the ratio of the projection lengths squared
-adjusted to the dimensions of the subspaces.}
-\label{fig:f_dist}
-\end{figure}
 
 
 \subsection{F-test}
@@ -436,6 +428,12 @@ y = \alpha_1 + v
 \]
 Note that there was a choice in the restricted models.
 
+\begin{marginfigure}
+\includegraphics[scale=0.55]{figures/04_ftest.pdf}
+\caption{F-statistic as the cotangens squared of $\varphi$}
+\label{fig:ftest}
+\end{marginfigure}
+
 We perform both regressions in order to get the ressiduals and plot them
 in Figure~\ref{fig:ftest}.
 Adjusted to the degrees of freedom, the ratio can be expressed in terms of the
@@ -443,10 +441,3 @@ angle between two vectors, $\varphi$, as demonstrated in Figure~\ref{fig:ftest}
 \[
 F = \frac{(RSS_{R} - RSS_{UR})/q}{RSS_{UR}/(n-k_{UR})} = \ctg^2 \varphi
 \]
-
-\begin{figure}
-\centering
-\includegraphics[width=0.55\linewidth]{figures/04_ftest.pdf}
-\caption{F-statistic as the cotangens squared of $\varphi$}
-\label{fig:ftest}
-\end{figure}

@@ -17,21 +17,23 @@
 \begin{tikzpicture}[scale=5,tdplot_main_coords]
 
 \coordinate (O) at (0,0,0);
-\coordinate (x3) at (0,0,1);
+\coordinate (un) at (1.12,0.96,0);
+\coordinate (x) at (0.245,0.882,0);
+\coordinate (hx) at (-0.6825, 0.195, 0);
+\coordinate (a) at (-0.5, 0.65, 0);
 
 \tdplotsetcoord{Y}{1}{50}{90}
+\tdplotsetcoord{A}{0.9}{63}{90}
 
-\draw[->] (O) -- (Y) node[anchor=south west]{$z$};
-\draw[->] (O) -- (Yxy) node[anchor=north west]{$H_2z$};
-\draw[->] (O) -- (x3) node[anchor=east]{$L_1$};
-\draw[->] (O) -- (Yz) node[anchor=east]{$H_1z$};
-\draw[dashed] (Y) -- (Yz);
-\draw[dashed] (Y) -- (Yxy);
+\draw (0.2,0.55) ellipse (0.7cm and 0.25cm) node[anchor=west, right=2cm]{\footnotesize$Lin(colX)$};
 
-\draw (0,0.5) ellipse (0.8cm and 0.3cm) node[anchor=west, right=3cm]{$L_2$};
-\tdplotsetthetaplanecoords{110}
-\tdplotdrawarc[tdplot_rotated_coords]{(O)}{0.1}{47}{87}{anchor=west}{$\varphi$}
-
+\draw[->] (O) -- (un) node[anchor=west]{$a^{(1)}$};
+\draw[->] (O) -- (Y) node[anchor=south west]{$y$};
+\draw[->] (O) -- (x) node[anchor=north east]{$a^{(2)}$};
+\draw[->] (O) -- (A) node[anchor=south west]{$a_{alt}^{(2)}$};
+\draw[->] (O) -- (a) node[anchor=north]{$a^{(3)}$};
+\draw[dashed] (A) -- (x);
+\tkzMarkRightAngle[size=0.03](O,x,A);
 
 \end{tikzpicture}
 \end{document}
